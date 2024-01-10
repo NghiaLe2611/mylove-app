@@ -62,6 +62,7 @@ const GiftApp = () => {
 	const canvasRef = useRef(null);
 	const spinRef = useRef(null);
 	const requestAni = useRef(null);
+    const resultRef = useRef("");
 
 	const ctx = canvasRef.current ? canvasRef.current.getContext('2d') : null;
 
@@ -75,7 +76,7 @@ const GiftApp = () => {
 		const sector = sectors[getIndex()];
 
 		if (ctx) {
-			console.log('rotate', ctx);
+			// console.log('rotate', ctx);
 			ctx.canvas.style.transform = `rotate(${ang - PI / 2}rad)`;
 		}
 		elSpin.style.background = !angVel ? '#000' : sector.color;
@@ -109,7 +110,7 @@ const GiftApp = () => {
 	}, [ctx, rotate]);
 
 	const frame = useCallback(() => {
-		// console.log('111 frame');
+		// console.log('frame');
 		setAng((prev) => prev + angVel);
 		setAng((prev) => prev % TAU);
 
@@ -134,7 +135,7 @@ const GiftApp = () => {
 				setIsSpinning(false);
 				setAngVel(0);
 				cancelAnimationFrame(requestAni.current);
-				alert(result);
+				alert(result); // result
 			}
 		}
 
@@ -145,51 +146,40 @@ const GiftApp = () => {
 		rotate();
 	}, [angVel, angVelMax, isAccelerating, isSpinning, result, rotate]);
 
-	// const frame = useCallback(() => {
-	// 	setAng((prevAng) => (prevAng + angVel) % TAU);
-
-	// 	if (!isSpinning) return;
-	// 	if (angVel >= angVelMax) setIsAccelerating(false);
-
-	// 	if (isAccelerating) {
-	// 		setAngVel((prevAngVel) => prevAngVel || angVelMin);
-	// 		setAngVel((prevAngVel) => prevAngVel * 3);
-	// 	} else {
-	// 		setIsAccelerating(false);
-	// 		setAngVel((prevAngVel) => prevAngVel * friction);
-
-	// 		if (angVel < angVelMin) {
-	// 			setIsSpinning(false);
-	// 			setAngVel(0);
-	// 			cancelAnimationFrame(requestAni.current);
-	// 			alert(result);
-	// 		}
-	// 	}
-
-	// 	rotate();
-	// }, [angVel, angVelMax, isAccelerating, isSpinning, result, rotate]);
-
-	const engine = useCallback(() => {
-		// console.log('engine');
-		frame();
-		requestAni.current = requestAnimationFrame(engine);
-		// requestAnimationFrame(engine);
-	}, [frame]);
-
-    // useEffect(() => {
-	// 	if (isSpinning) {
-	// 		engine();
-	// 	}
-	// }, [isSpinning, engine]);
+	// const engine = useCallback(() => {
+	// 	// console.log('engine');
+	// 	frame();
+	// 	requestAni.current = requestAnimationFrame(engine);
+	// 	// requestAnimationFrame(engine);
+	// }, [frame]);
 
 	useEffect(() => {
-        const requestId = requestAni.current;
-		return () => {
-			// console.log(222);
+        // console.log(111);
+		const engine = () => {
+            // console.log('engine');
+			frame();
 			requestAni.current = requestAnimationFrame(engine);
-			cancelAnimationFrame(requestId);
 		};
-	}, [engine]);
+
+		if (isSpinning) {
+			engine();
+		}
+
+		return () => {
+			if (requestAni.current) {
+				cancelAnimationFrame(requestAni.current);
+			}
+		};
+	}, [isSpinning, isAccelerating, angVelMax, frame]);
+
+	// useEffect(() => {
+	// 	const requestId = requestAni.current;
+	// 	return () => {
+	// 		// console.log(222);
+	// 		requestAni.current = requestAnimationFrame(engine);
+	// 		cancelAnimationFrame(requestId);
+	// 	};
+	// }, [engine]);
 
 	// const drawSector = useCallback(
 	// 	(sector, i) => {
@@ -217,10 +207,17 @@ const GiftApp = () => {
 
 	const handleSpin = () => {
 		if (isSpinning) return;
-		setIsSpinning(true);
-		setIsAccelerating(true);
-		setAngVelMax(rand(0.25, 0.4));
-		engine();
+		// setIsSpinning(true);
+		// setIsAccelerating(true);
+		// setAngVelMax(rand(0.25, 0.4));
+		setIsSpinning((prevIsSpinning) => {
+			if (!prevIsSpinning) {
+				setIsAccelerating(true);
+				setAngVelMax(rand(0.25, 0.4));
+				return true;
+			}
+			return prevIsSpinning;
+		});
 	};
 
 	return (
