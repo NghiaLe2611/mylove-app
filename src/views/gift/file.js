@@ -102,6 +102,7 @@ const rotate = () => {
 
 const frame = () => {
 	if (!isSpinning) {
+		cancelAnimationFrame(animFrame);
 		return;
 	}
 
@@ -136,6 +137,9 @@ const frame = () => {
 };
 
 const engine = () => {
+	if (!isSpinning) {
+		return;
+	}
 	console.log('engine');
 	frame();
 	animFrame = requestAnimationFrame(engine);
@@ -153,7 +157,8 @@ elSpin.addEventListener('click', () => {
 sectors.forEach(drawSector);
 rotate(); // Initial rotation
 
-// <div id="wheelOfFortune">
-//   <canvas id="wheel" width="300" height="300"></canvas>
-//   <div id="spin">SPIN asd asd asd as dasd as dasd asd asd as d</div>
-// </div>
+
+{/* <div id="wheelOfFortune">
+  <canvas id="wheel" width="300" height="300"></canvas>
+  <div id="spin">SPIN asd asd asd as dasd as dasd asd asd as d</div>
+</div> */}

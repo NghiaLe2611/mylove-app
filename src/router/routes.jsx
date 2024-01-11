@@ -8,7 +8,7 @@ import TravelApp from '@/views/travel';
 const routes = [
 	{
 		path: '/',
-		element: <Template1 />,
+		element: <GiftApp />,
 		loader: <div>Loading...</div>,
 		// children: [
 

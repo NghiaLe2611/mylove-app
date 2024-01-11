@@ -5,7 +5,7 @@ function App() {
     const element = useRoutes(routes);
 
 	return (
-		<div>
+		<div className='app'>
             {element}
         </div>
 	);
