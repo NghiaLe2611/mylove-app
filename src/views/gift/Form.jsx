@@ -53,7 +53,7 @@ const Form = ({ setFormValue, formData }) => {
 						className='block text-sm md:text-base md:flex font-medium text-gray-900 w-[100px]'>
 						Present 1
 					</label>
-					<Controller
+					{/* <Controller
 						name='present1'
 						control={control}
 						render={({ field }) => (
@@ -64,13 +64,14 @@ const Form = ({ setFormValue, formData }) => {
 								placeholder='Enter present 1'
 							/>
 						)}
-					/>
-					{/* <input
+					/> */}
+					<input
 						autoComplete='off'
 						{...register('present1')}
 						type='text'
+						placeholder='Enter present 1'
 						className={`custom-input ${errors && errors.present1 ? 'border-red-500' : ''}`}
-					/> */}
+					/>
 					<p className='text-red-600 text-sm'>{errors.present1?.message}</p>
 				</div>
 			</div>
@@ -85,6 +86,7 @@ const Form = ({ setFormValue, formData }) => {
 						autoComplete='off'
 						{...register('present2')}
 						type='text'
+						placeholder='Enter present 2'
 						className={`custom-input ${errors && errors.present2 ? 'border-red-500' : ''}`}
 					/>
 					<p className='text-red-600 text-sm'>{errors.present2?.message}</p>
@@ -101,6 +103,7 @@ const Form = ({ setFormValue, formData }) => {
 						autoComplete='off'
 						{...register('present3')}
 						type='text'
+						placeholder='Enter present 3'
 						className={`custom-input ${errors && errors.present3 ? 'border-red-500' : ''}`}
 					/>
 					<p className='text-red-600 text-sm'>{errors.present3?.message}</p>
@@ -117,6 +120,7 @@ const Form = ({ setFormValue, formData }) => {
 						autoComplete='off'
 						{...register('present4')}
 						type='text'
+						placeholder='Enter present 4'
 						className={`custom-input ${errors && errors.present4 ? 'border-red-500' : ''}`}
 					/>
 					<p className='text-red-600 text-sm'>{errors.present4?.message}</p>
@@ -133,6 +137,7 @@ const Form = ({ setFormValue, formData }) => {
 						autoComplete='off'
 						{...register('present5')}
 						type='text'
+						placeholder='Enter present 5'
 						className={`custom-input ${errors && errors.present5 ? 'border-red-500' : ''}`}
 					/>
 					<p className='text-red-600 text-sm'>{errors.present5?.message}</p>

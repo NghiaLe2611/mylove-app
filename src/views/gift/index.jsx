@@ -86,7 +86,7 @@ const GiftApp = () => {
 
 	const closeModal = useCallback(() => {
 		setIsModalOpen(false);
-		// setGender(null);
+		setGender(null);
 	}, []);
 
 	useEffect(() => {
@@ -107,6 +107,12 @@ const GiftApp = () => {
 
 	const handleSetGender = (value) => {
 		setGender(value);
+		// setGender(prev => {
+		// 	if (prev === value) {
+		// 		return null;
+		// 	}
+		// 	return value;
+		// });
 	};
 
 	const handleSetFormData = useCallback(
