@@ -1,12 +1,13 @@
 // import WheelComponent from 'react-wheel-of-prizes';
 
 import classNames from 'classnames';
-import {useCallback, useEffect, useState} from 'react';
-import {isMobile} from 'react-device-detect';
+import { useCallback, useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import Form from './Form';
 import WheelComponent from './WheelComponent';
-import './styles.scss';
 import Modal from './Modal';
+import Swal from 'sweetalert2';
+import './styles.scss';
 
 // Shuffle function to randomly reorder the array
 const shuffleArray = (arr) => {
@@ -54,50 +55,76 @@ const GiftApp = () => {
 	const [data, setData] = useState([]);
 	const [gender, setGender] = useState(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-    const [winner, setWinner] = useState(null);
+	const [winner, setWinner] = useState(null);
 
-    useEffect(() => {
-        if (winner && data.length) {
-            const winnerIndex = segments.indexOf(winner);
-            alert(data[winnerIndex]);
-            setWinner(null); // reset
-        }
-    }, [data, winner]);
+	useEffect(() => {
+		if (winner && data.length) {
+			const winnerIndex = segments.indexOf(winner);
+			// alert(data[winnerIndex]);
+			Swal.fire({
+				title: 'Congratulations !',
+				text: "You've got " + data[winnerIndex],
+				icon: 'success',
+			});
+			setWinner(null); // reset
+		}
+	}, [data, winner]);
 
-	const openModal = () => {
+	// Get data from local storage
+	useEffect(() => {
+		if (gender) {
+			const storageData = localStorage.getItem(`data_${gender}`);
+			if (storageData) {
+				setData(JSON.parse(storageData));
+			}
+		}
+	}, [gender]);
+
+	const openModal = useCallback(() => {
 		setIsModalOpen(true);
-	};
+	}, []);
 
-	const closeModal = () => {
+	const closeModal = useCallback(() => {
 		setIsModalOpen(false);
-	};
+		// setGender(null);
+	}, []);
+
+	useEffect(() => {
+		if (gender) {
+			openModal();
+		} else {
+			closeModal();
+		}
+	}, [closeModal, gender, openModal]);
 
 	const onFinished = (winner) => {
 		// const winnerIndex = segments.indexOf(winner);
 		// if (data[winnerIndex]) {
 		// 	alert(data[winnerIndex]);
 		// }
-        setWinner(winner);
+		setWinner(winner);
 	};
 
 	const handleSetGender = (value) => {
 		setGender(value);
 	};
 
-	const handleSetFormData = useCallback((res) => {
-		let newData = [];
+	const handleSetFormData = useCallback(
+		(res) => {
+			let newData = [];
 
-		Object.keys(res).forEach((key) => {
-			newData.push(res[key]);
-		});
-		setData(newData);
+			Object.keys(res).forEach((key) => {
+				newData.push(res[key]);
+			});
+			setData(newData);
 
-        if (gender) {
-			localStorage.setItem(`data_${gender}`, JSON.stringify(newData));
-		}
-	}, [gender]);
-
-    console.log(222, data);
+			if (gender) {
+				localStorage.setItem(`data_${gender}`, JSON.stringify(newData));
+			}
+			closeModal();
+		},
+		[gender, closeModal]
+	);
 
 	return (
 		<div>
@@ -122,25 +149,26 @@ const GiftApp = () => {
 						<img src='/images/gift/icon-woman.svg' alt='woman' className='w-full max-h-[60px]' />
 					</button>
 				</div>
-				<Form setFormValue={handleSetFormData} />
-				<WheelComponent
-					segments={segments}
-					segColors={segColors}
-					onFinished={(winner) => onFinished(winner)}
-					primaryColor='black'
-					contrastColor='white'
-					buttonText='Spin'
-					isOnlyOnce={false}
-					upDuration={500}
-					downDuration={600}
-					size={isMobile ? 300 : 200}
-					fontFamily='Arial'
-					height={600}
-				/>
+
+				{data.length > 0 ? (
+					<WheelComponent
+						segments={segments}
+						segColors={segColors}
+						onFinished={(winner) => onFinished(winner)}
+						primaryColor='black'
+						contrastColor='white'
+						buttonText='Spin'
+						isOnlyOnce={false}
+						upDuration={500}
+						downDuration={600}
+						size={isMobile ? 280 : 200}
+						fontFamily='Arial'
+						height={600}
+					/>
+				) : null}
 			</div>
 			<Modal isOpen={isModalOpen} onClose={closeModal}>
-				<h2 className='text-2xl font-bold mb-4'>Modal Content</h2>
-				<p>This is the content of the modal.</p>
+				<Form setFormValue={handleSetFormData} formData={data} />
 			</Modal>
 		</div>
 	);

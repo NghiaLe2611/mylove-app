@@ -1,27 +1,47 @@
-import {yupResolver} from '@hookform/resolvers/yup';
-import {useForm} from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 const validationSchema = yup.object().shape({
-	present1: yup.string().required('Không được trống'),
-	present2: yup.string().required('Không được trống'),
-	present3: yup.string().required('Không được trống'),
-	present4: yup.string().required('Không được trống'),
-	present5: yup.string().required('Không được trống'),
+	present1: yup.string().required('Input is required'),
+	present2: yup.string().required('Input is required'),
+	present3: yup.string().required('Input is required'),
+	present4: yup.string().required('Input is required'),
+	present5: yup.string().required('Input is required'),
 });
 
-const Form = ({setFormValue}) => {
+const Form = ({ setFormValue, formData }) => {
 	const {
 		handleSubmit,
 		control,
+		reset,
 		register,
-		formState: {errors},
+		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(validationSchema),
+		defaultValues: {
+			present1: '',
+			present2: '',
+			present3: '',
+			present4: '',
+			present5: '',
+		},
 	});
+
+	useEffect(() => {
+		reset({
+			present1: formData ? formData[0] : '',
+			present2: formData ? formData[1] : '',
+			present3: formData ? formData[2] : '',
+			present4: formData ? formData[3] : '',
+			present5: formData ? formData[4] : '',
+		});
+	}, [formData, reset]);
 
 	const onSubmit = (data) => {
 		setFormValue(data);
+		reset();
 	};
 
 	return (
@@ -33,12 +53,24 @@ const Form = ({setFormValue}) => {
 						className='block text-sm md:text-base md:flex font-medium text-gray-900 w-[100px]'>
 						Present 1
 					</label>
-					<input
+					<Controller
+						name='present1'
+						control={control}
+						render={({ field }) => (
+							<input
+								className={`custom-input ${errors && errors.present1 ? 'border-red-500' : ''}`}
+								{...field}
+								type='text'
+								placeholder='Enter present 1'
+							/>
+						)}
+					/>
+					{/* <input
 						autoComplete='off'
 						{...register('present1')}
 						type='text'
 						className={`custom-input ${errors && errors.present1 ? 'border-red-500' : ''}`}
-					/>
+					/> */}
 					<p className='text-red-600 text-sm'>{errors.present1?.message}</p>
 				</div>
 			</div>

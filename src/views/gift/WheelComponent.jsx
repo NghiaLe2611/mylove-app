@@ -52,7 +52,7 @@ const WheelComponent = ({
 
 	const initCanvas = () => {
 		let canvas = document.getElementById('canvas');
-		console.log(navigator);
+		// console.log(navigator);
 
 		if (navigator.userAgent.indexOf('MSIE') !== -1) {
 			canvas = document.createElement('canvas');
