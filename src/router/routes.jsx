@@ -8,7 +8,9 @@ import TravelApp from '@/views/travel';
 const routes = [
 	{
 		path: '/',
-		element: <GiftApp />,
+		element: <div>
+			<h1 className='text-xl font-bold text-center my-5'>Welcome</h1>
+		</div>,
 		loader: <div>Loading...</div>,
 		// children: [
 

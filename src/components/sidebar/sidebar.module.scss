@@ -1,0 +1,10 @@
+.sidebar{
+    li{
+        a{
+            @apply p-3 block w-full leading-none;
+            &.active{
+                font-weight: bold;
+            }
+        }
+    }
+}

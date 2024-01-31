@@ -134,7 +134,7 @@ const GiftApp = () => {
 
 	return (
 		<div>
-			<h1 className='text-center font-bold text-xl md:text-[2.5rem] py-3 mb-10 text-white bg-green-600'>
+			<h1 className='text-center font-bold text-xl md:text-[2.5rem] py-3 mb-10 '>
 				Lucky Money 2024
 			</h1>
 			<div className='content px-2'>

@@ -1,0 +1,14 @@
+.header{
+    @apply bg-green-600 px-3 py-2 xl:px-0 xl:py-0;
+}
+
+.nav-list{
+    @apply flex items-center justify-center;
+}
+
+.nav-item {
+    @apply block py-3 pr-4 pl-3 text-white hover:bg-green-100 hover:text-green-600 transition-all;
+    &.active{
+        font-weight: bold;
+    }
+}
