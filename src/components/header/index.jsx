@@ -29,7 +29,7 @@ const Header = () => {
 					<Text className='text-white ml-2 font-medium'>My Love</Text>
 				</Link>
 				<Box flex={1} className='hidden text-center md:block'>
-					<h1 className='text-white font-bold text-lg lg:text-xl'>My Love App</h1>
+					<h1 className='text-white font-bold text-lg lg:text-xlc'>My Love App</h1>
 				</Box>
 				<Box ml='auto'>
 					<Box as='button' className={`${classes['nav-item']} hidden md:block`} onClick={handleLogin}>
