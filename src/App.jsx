@@ -2,17 +2,18 @@ import routes from '@/router/routes';
 import { Box } from '@chakra-ui/react';
 import { useRoutes } from 'react-router-dom';
 import Header from '@/components/header/index';
+import Footer from './components/footer';
 
 function App() {
     const element = useRoutes(routes);
 
 	return (
-		<Box display='flex' flexDirection='column' className='h-full'>
+		<Box display='flex' flexDirection='column' className='h-full md:p-0 relative'>
 			<Header />
-			<Box as='main' className='mx-auto max-w-screen-xl w-full px-3 md:px-0' flex={1} py={5}>
+			<Box as='main' className='mx-auto max-w-screen-xl w-full px-3 md:px-0 pt-5 pb-16 md:pb-5 overflow-y-auto' flex={1} px={5}>
 				{element}
 			</Box>
-			{/* <Footer /> */}
+			<Footer />
 		</Box>
 	);
 }

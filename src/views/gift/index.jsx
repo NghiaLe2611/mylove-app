@@ -3,10 +3,10 @@
 import classNames from 'classnames';
 import { useCallback, useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import Form from './Form';
-import WheelComponent from './WheelComponent';
-import Modal from './Modal';
 import Swal from 'sweetalert2';
+import Form from './Form';
+import Modal from './Modal';
+import WheelComponent from './WheelComponent';
 import './styles.scss';
 
 // Shuffle function to randomly reorder the array
@@ -134,21 +134,18 @@ const GiftApp = () => {
 
 	return (
 		<div>
-			<h1 className='text-center font-bold text-xl md:text-[2.5rem] py-3 mb-10 '>
-				Lucky Money 2024
-			</h1>
 			<div className='content px-2'>
-				<div className='flex items-center justify-center mx-auto my-4 flex-wrap max-w-[600px]'>
-					<p className='w-full text-center mb-5 font-medium text-lg md:text-[2rem]'>You are</p>
+				<div className='flex items-center justify-between md:justify-center mx-auto my-4 flex-wrap max-w-[600px]'>
+					<p className='w-full text-center mb-5 md:mb-20 font-medium text-lg md:text-3xl'>You are</p>
 					<button
-						className={classNames('btn-gender mr-20', {
+						className={classNames('btn-gender md:mr-20', {
 							active: gender === 'male',
 						})}
 						onClick={() => handleSetGender('male')}>
 						<img src='/images/gift/icon-man.svg' alt='man' className='w-full' />
 					</button>
 					<button
-						className={classNames('btn-gender ml-20', {
+						className={classNames('btn-gender md:ml-20', {
 							active: gender === 'female',
 						})}
 						onClick={() => handleSetGender('female')}>

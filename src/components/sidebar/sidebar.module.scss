@@ -1,9 +1,20 @@
-.sidebar{
-    li{
-        a{
-            @apply p-3 block w-full leading-none;
-            &.active{
+.sidebar {
+    flex: 1;
+    li {
+        a {
+            @apply flex items-center justify-start;
+            @apply text-sm md:text-base text-white p-3 w-full leading-none;
+
+            &.active {
                 font-weight: bold;
+            }
+
+            span {
+                @apply ml-2;
+            }
+
+            svg {
+                @apply text-lg min-w-[40px];
             }
         }
     }

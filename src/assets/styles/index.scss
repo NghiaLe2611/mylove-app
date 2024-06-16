@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+#root{
+    @apply rounded-lg md:rounded-none;
+    @apply m-3 md:m-0 overflow-y-hidden md:overflow-y-auto;
+    background-color: #fff;
+    height: 100vh;
+    overflow-y: auto;
+}
+
 :root {
 	--bg-primary: #2db064; // #48914b
 }
@@ -11,4 +19,11 @@
 
 body {
 	font-family: 'Roboto', sans-serif !important;
+    @apply bg-slate-200 md:bg-transparent #{!important};
+    @apply overflow-y-hidden md:overflow-y-auto;
+}
+
+html,body{
+    max-height: 100vh;
+    min-height: auto;
 }

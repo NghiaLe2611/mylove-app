@@ -49,7 +49,6 @@ function usePriceboardUpdater() {
         },
         [dispatch]
     );
- 
 
     return { setData };
 }

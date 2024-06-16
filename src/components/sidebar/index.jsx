@@ -1,37 +1,78 @@
-import { Box, Drawer, DrawerContent, DrawerHeader, DrawerOverlay, Image, Text } from '@chakra-ui/react';
+import {
+	Avatar,
+	Box,
+	Button,
+	Divider,
+	Drawer,
+	DrawerContent,
+	DrawerHeader,
+	DrawerOverlay,
+	Image,
+	Text,
+} from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import classes from './sidebar.module.scss';
+import { MdHome, MdCardGiftcard, MdOutlinePlace, MdMenuBook, MdOutlineSportsTennis, MdLogout } from 'react-icons/md';
+
+export const menu = [
+	{
+		title: 'Home',
+		url: '/',
+		icon: <MdHome />,
+	},
+	{
+		title: 'Lucky Money',
+		url: '/gift',
+		icon: <MdCardGiftcard />,
+	},
+	{
+		title: 'Travel',
+		url: '/travel',
+		icon: <MdOutlinePlace />,
+	},
+	// {
+	// 	title: 'Badminton',
+	// 	url: '/badminton',
+	// 	icon: <MdOutlineSportsTennis />,
+	// },
+	// {
+	// 	title: 'Diary',
+	// 	url: '/diary',
+	// 	icon: <MdMenuBook />,
+	// },
+];
 
 const Sidebar = ({ onClose, isOpen }) => {
+	const handleLogout = () => {};
+
 	return (
 		<Drawer placement='left' onClose={onClose} isOpen={isOpen}>
 			<DrawerOverlay />
-			<DrawerContent>
-				<DrawerHeader borderBottomWidth='1px' className='bg-green-600 mb-2 !p-2'>
-					<Link to='/' className='flex items-center mr-2'>
+			<DrawerContent className='!bg-primary'>
+				<DrawerHeader className='!p-4'>
+					{/* <Link to='/' className='flex items-center mr-2 !outline-none'>
 						<Image src='/images/love-img.png' alt='logo' maxW={`40px`} />
 						<Text className='text-white ml-2 font-medium'>My Love</Text>
-					</Link>
+					</Link> */}
+					<Box className='flex items-center'>
+						<Avatar size='md' src='https://bit.ly/broken-link' />
+						<Text className='ml-4 text-base text-white'>User</Text>
+					</Box>
 				</DrawerHeader>
+				<Divider orientation='horizontal' />
 				<Box as='ul' className={classes.sidebar}>
-					<li>
-						<Link to='/'>Home</Link>
-					</li>
-					<li>
-						<Link to='/gift'>Lucky Money</Link>
-					</li>
-					<li>
-						<Link to='/travel'>Travel</Link>
-					</li>
-					<li>
-						<Link to='/badminton'>Badminton</Link>
-					</li>
-					<li>
-						<Link to='/diary'>Diary</Link>
-					</li>
-					<li>
-						<Link>Sign in</Link>
-					</li>
+					{menu.map((item) => (
+						<li key={item.title}>
+							<Link to={item.url}>
+								{item.icon}
+								<span>{item.title}</span>
+							</Link>
+						</li>
+					))}
+				</Box>
+				<Divider orientation='horizontal' />
+				<Box className='mt-auto py-5' onClick={handleLogout}>
+					<Text className='text-white px-5'>Log out</Text>
 				</Box>
 			</DrawerContent>
 		</Drawer>
