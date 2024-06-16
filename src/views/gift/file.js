@@ -97,7 +97,7 @@ const rotate = () => {
 	elSpin.style.background = !angVel ? '#000' : sector.color;
 	result = sector.name;
 
-	console.log('rotate');
+	// console.log('rotate');
 };
 
 const frame = () => {
@@ -131,7 +131,7 @@ const frame = () => {
 	ang += angVel; // Update angle
 	ang %= TAU; // Normalize angle
 
-	console.log('frame', ang);
+	// console.log('frame', ang);
 
 	rotate(); // CSS rotate!
 };
@@ -140,7 +140,7 @@ const engine = () => {
 	if (!isSpinning) {
 		return;
 	}
-	console.log('engine');
+	// console.log('engine');
 	frame();
 	animFrame = requestAnimationFrame(engine);
 };
