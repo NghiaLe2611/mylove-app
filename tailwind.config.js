@@ -13,6 +13,7 @@ export default {
 		extend: {
 			colors: {
 				'primary': 'var(--bg-primary)',
+                'common': 'var(--text-common)'
 			},
 		},
 	},

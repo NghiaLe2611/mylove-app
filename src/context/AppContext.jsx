@@ -1,0 +1,54 @@
+import { createContext, useCallback, useContext, useMemo, useState } from 'react';
+
+const AppContext = createContext();
+const AppUpdaterContext = createContext();
+
+const AppProvider = ({ children }) => {
+	const [data, setData] = useState([]);
+
+	const state = useMemo(() => {
+		return {
+			data,
+		};
+	}, [data]);
+
+	const dispatch = useMemo(() => {
+		return {
+			setData,
+		};
+	}, []);
+
+	return (
+		<AppContext.Provider value={state}>
+			<AppUpdaterContext.Provider value={dispatch}>{children}</AppUpdaterContext.Provider>
+		</AppContext.Provider>
+	);
+};
+
+function useAppState() {
+	const state = useContext(AppContext);
+	if (typeof state === 'undefined') {
+		throw new Error('useAppState must be used within a AppProvider');
+	}
+
+	return state;
+}
+
+function useAppUpdater() {
+	const dispatch = useContext(AppUpdaterContext);
+	// const { setData, setTabValue, setWatchlist, setIsShowPopup, setTradeCW } = dispatch;
+	if (typeof dispatch === 'undefined') {
+		throw new Error('useAppUpdater must be used within a AppProvider');
+	}
+
+	const setData = useCallback(
+		(val) => {
+			dispatch.setData(val);
+		},
+		[dispatch],
+	);
+
+	return { setData };
+}
+
+export { AppProvider, useAppState, useAppUpdater };

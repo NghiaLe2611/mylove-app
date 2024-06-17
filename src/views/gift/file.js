@@ -29,13 +29,13 @@ const shuffledColors = shuffleArray([...colorOptions]);
 
 // Define the sectors array
 const sectors = [
-	{label: '1', name: 'Đi ăn trứng cút :))'},
-	{label: '2', name: 'Đi coi phim :))'},
-	{label: '3', name: 'Được cắn anh :))'},
-	{label: '4', name: 'Đóng phim bồ ck con dâu :))'},
-	{label: '5', name: 'Đi ăn buffet :))'},
-	{label: '6', name: 'Được 1 cái ôm thật chặt, thật lâu và lãng mạn :))'},
-	{label: '7', name: 'Chúc bạn may mắn lần sau :))'},
+	{ label: '1', name: 'Đi ăn trứng cút :))' },
+	{ label: '2', name: 'Đi coi phim :))' },
+	{ label: '3', name: 'Được cắn anh :))' },
+	{ label: '4', name: 'Đóng phim bồ ck con dâu :))' },
+	{ label: '5', name: 'Đi ăn buffet :))' },
+	{ label: '6', name: 'Được 1 cái ôm thật chặt, thật lâu và lãng mạn :))' },
+	{ label: '7', name: 'Chúc bạn may mắn lần sau :))' },
 ];
 
 // Assign colors from the shuffled array to each sector object
@@ -157,8 +157,9 @@ elSpin.addEventListener('click', () => {
 sectors.forEach(drawSector);
 rotate(); // Initial rotation
 
-
-{/* <div id="wheelOfFortune">
+{
+	/* <div id="wheelOfFortune">
   <canvas id="wheel" width="300" height="300"></canvas>
   <div id="spin">SPIN asd asd asd as dasd as dasd asd asd as d</div>
-</div> */}
+</div> */
+}

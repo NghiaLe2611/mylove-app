@@ -7,8 +7,16 @@
 }
 
 .nav-item {
-    @apply block py-3 pr-4 pl-3 text-white hover:bg-green-100 hover:text-green-600 transition-all;
+    @apply block py-3 pr-4 pl-3 text-common hover:bg-green-100 hover:text-green-600 transition-all;
     &.active{
         font-weight: bold;
+    }
+}
+
+.title{
+    @apply flex items-center md:text-common font-bold lg:text-xl;
+    svg{
+        font-size: 22px;
+        margin-right: 5px;
     }
 }

@@ -47,13 +47,13 @@ const Template1 = () => {
 								backgroundSize: 'cover',
 							}}>
 							<div className='absolute top-0 right-0 -mt-3 mr-3'>
-								<div className='rounded-full bg-indigo-500 text-white text-xs py-1 pl-2 pr-3 leading-none'>
+								<div className='rounded-full bg-indigo-500 text-common text-xs py-1 pl-2 pr-3 leading-none'>
 									<i className='mdi mdi-fire text-base align-middle' />{' '}
 									<span className='align-middle'>FRESH</span>
 								</div>
 							</div>
 							<div className='h-48' />
-							<h2 className='text-white text-2xl font-bold leading-tight mb-3 pr-5'>
+							<h2 className='text-common text-2xl font-bold leading-tight mb-3 pr-5'>
 								Tasnim Lacey New Album Out&nbsp;Now
 							</h2>
 							<div className='flex w-full items-center text-sm text-gray-300 font-medium'>
@@ -83,7 +83,7 @@ const Template1 = () => {
 								backgroundSize: 'cover',
 							}}>
 							<div className='h-48' />
-							<h2 className='text-white text-2xl font-bold leading-tight mb-3 pr-5'>
+							<h2 className='text-common text-2xl font-bold leading-tight mb-3 pr-5'>
 								Top 5 Cocktail Bars in&nbsp;NYC
 							</h2>
 							<div className='flex w-full items-center text-sm text-gray-300 font-medium'>
@@ -118,7 +118,7 @@ const Template1 = () => {
 									backgroundSize: 'cover',
 								}}>
 								<div className='h-24' />
-								<h3 className='text-lg font-bold text-white leading-tight'>DJ Dan Spins The Wheels</h3>
+								<h3 className='text-lg font-bold text-common leading-tight'>DJ Dan Spins The Wheels</h3>
 							</a>
 							<a
 								href='#'
@@ -129,7 +129,7 @@ const Template1 = () => {
 									backgroundSize: 'cover',
 								}}>
 								<div className='h-32' />
-								<h3 className='text-lg font-bold text-white leading-tight'>
+								<h3 className='text-lg font-bold text-common leading-tight'>
 									Top Travels Destinations For 2020
 								</h3>
 							</a>
@@ -144,7 +144,7 @@ const Template1 = () => {
 									backgroundSize: 'cover',
 								}}>
 								<div className='h-32' />
-								<h3 className='text-lg font-bold text-white leading-tight'>
+								<h3 className='text-lg font-bold text-common leading-tight'>
 									M&amp;S Launches New Makeup Range!
 								</h3>
 							</a>
@@ -157,7 +157,7 @@ const Template1 = () => {
 									backgroundSize: 'cover',
 								}}>
 								<div className='h-24' />
-								<h3 className='text-lg font-bold text-white leading-tight'>
+								<h3 className='text-lg font-bold text-common leading-tight'>
 									APT Set To Be A&nbsp;Ripper
 								</h3>
 							</a>

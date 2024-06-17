@@ -3,16 +3,21 @@
     grid-auto-columns: minmax(120px, 1fr);
     grid-auto-flow: column;
     // overflow-x: auto;
-    @apply bg-primary fixed bottom-0 left-[50%];
+    @apply fixed bottom-0 left-[50%];
+    // bg-primary
     transform: translateX(-50%);
-    width: calc(100% - 1.5rem);
+    width: calc(100% - 0.5rem);
     .item {
         a{
-            @apply px-2 py-3 text-center text-white text-sm;
+            @apply font-light opacity-80;
+            @apply px-2 py-3 text-center text-common text-sm;
             @apply flex flex-col items-center justify-center;
             svg{
                 font-size: 20px;
             }
+        }
+        &.active a{
+            @apply font-semibold opacity-100;
         }
     }
 }

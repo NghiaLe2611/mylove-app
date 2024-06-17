@@ -67,7 +67,7 @@ const Template2 = () => {
 						/>
 						<ul className='mt-8 flex justify-between'>
 							<li className='inline-block'>
-								<div className='bg-pink-400 mx-auto rounded-full text-white h-10 w-10 flex justify-center items-center'>
+								<div className='bg-pink-400 mx-auto rounded-full text-common h-10 w-10 flex justify-center items-center'>
 									<svg
 										className='h-5 w-5'
 										xmlns='http://www.w3.org/2000/svg'

@@ -1,0 +1,7 @@
+.title {
+    @apply text-2xl font-bold text-center my-5;
+    background: #004400;
+    background: linear-gradient(to left, #004400 0%, #30D533 60%, #3BEFFF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

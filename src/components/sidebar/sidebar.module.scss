@@ -1,9 +1,9 @@
 .sidebar {
-    flex: 1;
+    @apply flex-1 py-4;
     li {
         a {
             @apply flex items-center justify-start;
-            @apply text-sm md:text-base text-white p-3 w-full leading-none;
+            @apply text-sm md:text-base text-common p-3 w-full leading-none;
 
             &.active {
                 font-weight: bold;

@@ -4,7 +4,7 @@
 
 #root{
     @apply rounded-lg md:rounded-none;
-    @apply m-3 md:m-0 overflow-y-hidden md:overflow-y-auto;
+    @apply m-1 md:m-0 overflow-y-hidden md:overflow-y-auto;
     background-color: #fff;
     height: 100vh;
     overflow-y: auto;
@@ -12,9 +12,12 @@
 
 :root {
 	--bg-primary: #2db064; // #48914b
+    --text-common: #535353;
 }
 
 .dark-theme {
+    --bg-primary: #2db064;
+    --text-common: #dbdbdb;
 }
 
 body {
@@ -26,4 +29,15 @@ body {
 html,body{
     max-height: 100vh;
     min-height: auto;
+}
+
+a{
+    text-decoration: none;
+    outline: none;
+}
+
+.home{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

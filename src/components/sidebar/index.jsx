@@ -52,11 +52,11 @@ const Sidebar = ({ onClose, isOpen }) => {
 				<DrawerHeader className='!p-4'>
 					{/* <Link to='/' className='flex items-center mr-2 !outline-none'>
 						<Image src='/images/love-img.png' alt='logo' maxW={`40px`} />
-						<Text className='text-white ml-2 font-medium'>My Love</Text>
+						<Text className='text-common ml-2 font-medium'>My Love</Text>
 					</Link> */}
 					<Box className='flex items-center'>
-						<Avatar size='md' src='https://bit.ly/broken-link' />
-						<Text className='ml-4 text-base text-white'>User</Text>
+						<Avatar size='sm' src='https://bit.ly/broken-link' />
+						<Text className='ml-4 text-base text-common'>User</Text>
 					</Box>
 				</DrawerHeader>
 				<Divider orientation='horizontal' />
@@ -72,7 +72,7 @@ const Sidebar = ({ onClose, isOpen }) => {
 				</Box>
 				<Divider orientation='horizontal' />
 				<Box className='mt-auto py-5' onClick={handleLogout}>
-					<Text className='text-white px-5'>Log out</Text>
+					<Text className='text-common px-5'>Log out</Text>
 				</Box>
 			</DrawerContent>
 		</Drawer>
