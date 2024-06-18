@@ -1,7 +1,7 @@
-import { useAppContext } from '@/contexts/AppContext';
+// import { useAppContext } from '@/contexts/AppContext';
 import { ImBlocked } from 'react-icons/im';
-// import {useSelector} from 'react-redux';
-// import {Navigate} from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 const UnAuthorizedPage = () => {
 	return (
@@ -13,13 +13,13 @@ const UnAuthorizedPage = () => {
 };
 
 const PrivateRoute = ({ children }) => {
-	const { userInfo } = useAppContext();
+    const { isLoggedIn } = useSelector(state => state.auth);
 
-	if (!userInfo) return <UnAuthorizedPage />;
-	// console.log(111, role)
-	if (userInfo) {
+	if (isLoggedIn) {
 		return children;
 	}
+
+    return <Navigate to='/login' />;
 };
 
 export default PrivateRoute;

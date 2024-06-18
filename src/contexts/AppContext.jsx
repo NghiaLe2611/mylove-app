@@ -25,10 +25,10 @@ const AppProvider = ({ children }) => {
 	);
 };
 
-function useAppState() {
+function useAppContext() {
 	const state = useContext(AppContext);
 	if (typeof state === 'undefined') {
-		throw new Error('useAppState must be used within a AppProvider');
+		throw new Error('useAppContext must be used within a AppProvider');
 	}
 
 	return state;
@@ -51,4 +51,4 @@ function useAppUpdater() {
 	return { setData };
 }
 
-export { AppProvider, useAppState, useAppUpdater };
+export { AppProvider, useAppContext, useAppUpdater };

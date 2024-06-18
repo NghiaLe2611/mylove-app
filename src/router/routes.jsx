@@ -3,6 +3,7 @@ import NotFound from '@/components/NotFound';
 import Loader from '@/components/loader';
 import MainLayout from '@/layouts/MainLayout';
 import { useRoutes } from 'react-router-dom';
+import PrivateRoute from '@/components/route/PrivateRoute';
 
 // eslint-disable-next-line react/display-name
 const Loadable = (Component) => (props) => (
@@ -29,15 +30,15 @@ const routes = [
 		children: [
 			{
 				path: '/',
-				element: <HomePage />,
+				element: <PrivateRoute><HomePage /></PrivateRoute>,
 			},
 			{
 				path: '/travel',
-				element: <TravelPage />,
+				element: <PrivateRoute><TravelPage /></PrivateRoute>,
 			},
 			{
 				path: '/gift',
-				element: <GiftPage />,
+				element: <PrivateRoute><GiftPage /></PrivateRoute>,
 			},
 		],
 	},

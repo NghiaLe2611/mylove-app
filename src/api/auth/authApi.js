@@ -1,9 +1,13 @@
 import axiosClient from '@/api/axiosClient';
 
 export const authLogin = (user) => {
-	return axiosClient.post('/api/auth/login', user, {
-		withCredentials: true,
-	});
+	return axiosClient.post(
+		'/api/auth/login',
+		user,
+		// {
+		//     withCredentials: true,
+		// }
+	);
 };
 
 export const authLogout = (email) => {
@@ -12,8 +16,8 @@ export const authLogout = (email) => {
 		{
 			email,
 		},
-		{
-			withCredentials: true,
-		},
+		// {
+		// 	withCredentials: true,
+		// },
 	);
 };

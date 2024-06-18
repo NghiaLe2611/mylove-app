@@ -9,6 +9,7 @@ const axiosClient = axios.create({
         // 'Access-Control-Allow-Origin': '*',
     },
     paramsSerializer: (params) => queryString.stringify(params),
+    withCredentials: true,
     timeout: 20000
 });
 
@@ -16,10 +17,9 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use((config) => {
     const customHeaders = {};
     const accessToken = Cookies.get('token') ;
-    const token = accessToken || localStorage.getItem('token');
     
-    if (token) {
-        customHeaders.Authorization = `Bearer ${token}`;
+    if (accessToken) {
+        customHeaders.Authorization = `Bearer ${accessToken}`;
     }
 
     return {
@@ -41,7 +41,6 @@ axiosClient.interceptors.response.use(
         if (error.response && (error.response.status === 401 || error.response.status === 403)) {
             // Token is not valid or has expired, refresh the window
             window.href = '/';
-            localStorage.removeItem('user');
             Cookies.remove('access_token');
         }
         

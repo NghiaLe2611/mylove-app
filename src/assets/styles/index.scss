@@ -44,3 +44,11 @@ a{
     align-items: center;
     justify-content: center;
 }
+
+.background{
+    @apply bg-[url('/images/background.png')];
+}
+
+.dark-theme .background{
+    @apply bg-[url('/images/background-dark.png')];
+}
