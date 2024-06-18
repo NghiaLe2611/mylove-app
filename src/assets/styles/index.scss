@@ -11,19 +11,22 @@
 }
 
 :root {
-	--bg-primary: #2db064; // #48914b
+	--primary: #2db064; // #48914b
     --text-common: #535353;
+    --input: #f7f8f9;
 }
 
 .dark-theme {
-    --bg-primary: #2db064;
-    --text-common: #dbdbdb;
+    --primary: #2db064;
+    --text-common: #ffffff;
+    --input: #282828;
 }
 
 body {
-	font-family: 'Roboto', sans-serif !important;
+    font-family: "Open Sans", sans-serif;
     @apply bg-slate-200 md:bg-transparent #{!important};
     @apply overflow-y-hidden md:overflow-y-auto;
+    --chakra-colors-chakra-body-text: var(--text-common);
 }
 
 html,body{

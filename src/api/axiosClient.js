@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import queryString from 'query-string';
 
 const axiosClient = axios.create({
-    baseURL: import.meta.env.REACT_APP_API_URL,
+    baseURL: import.meta.env.VITE_API_URL,
     headers: {
         'Content-Type': 'application/json',
         // 'Access-Control-Allow-Origin': '*',

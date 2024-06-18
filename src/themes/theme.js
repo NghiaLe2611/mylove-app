@@ -9,6 +9,21 @@ const breakpoints = {
 	'2xl': '1920px',
 };
 
-const theme = extendTheme({ breakpoints });
+const theme = extendTheme({
+	breakpoints,
+	components: {
+		Input: {
+			baseStyle: () => ({
+				field: {
+					backgroundColor: 'var(--input) !important',
+                    '_focusVisible': {
+                        'border-color': 'var(--primary) !important',
+                        'box-shadow': '0 0 0 1px var(--primary)'
+                    }
+				},
+			}),
+		},
+	},
+});
 
 export { breakpoints, theme };

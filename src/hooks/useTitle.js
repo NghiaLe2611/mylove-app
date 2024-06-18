@@ -22,7 +22,7 @@ const useTitle = () => {
 
     const icon = useMemo(() => {
         const item = menu.find(item => item.url === location.pathname);
-        return item.icon
+        return item?.icon || null;
     }, [location]);
 
 	return {

@@ -1,0 +1,8 @@
+.container{
+    @apply h-full p-8 flex items-center;
+    @apply bg-[url('/images/background.png')] bg-no-repeat bg-cover relative;
+}
+
+.title{
+    @apply font-bold text-xl text-center mb-10;
+}
