@@ -1,3 +1,4 @@
+import FadeIn from '@/components/animations/FadeIn';
 import Footer from '@/components/footer';
 import Header from '@/components/header';
 import useTitle from '@/hooks/useTitle';
@@ -15,7 +16,9 @@ const MainLayout = () => {
 				className={`${path ? path : 'home'} mx-auto max-w-screen-xl w-full px-3 md:px-0 pt-5 pb-16 md:pb-5 overflow-y-auto`}
 				flex={1}
 				px={5}>
-				<Outlet />
+				<FadeIn>
+					<Outlet />
+				</FadeIn>
 			</Box>
 			<Footer />
 		</Box>

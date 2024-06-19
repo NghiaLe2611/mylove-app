@@ -1,16 +1,21 @@
-import { Avatar, Box, Image, Text } from '@chakra-ui/react';
+import { Avatar, Box, Button, Image, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
-import { MdMenu, MdMenuOpen } from 'react-icons/md';
 import { Link, useLocation } from 'react-router-dom';
 import Sidebar from '../sidebar';
 import classes from './header.module.scss';
 import useTitle from '@/hooks/useTitle';
+import { useDispatch, useSelector } from 'react-redux';
+import { MdMenu, MdMenuOpen } from 'react-icons/md';
+import { RiLogoutBoxLine } from 'react-icons/ri';
+import { logout } from '@/api/auth/authService';
 
 const Header = () => {
+	const { isLoggedIn, username } = useSelector((state) => state.auth);
+
 	const [isOpenMenu, setIsOpenMenu] = useState(false);
 	const location = useLocation();
-
+	const dispatch = useDispatch();
 	const { title, icon } = useTitle();
 
 	useEffect(() => {
@@ -23,6 +28,10 @@ const Header = () => {
 
 	const handleLogin = () => {};
 
+	const handleLogout = () => {
+		logout(null, dispatch);
+	};
+    
 	return (
 		<Box as='header' className={classes.header}>
 			<BrowserView>
@@ -42,24 +51,16 @@ const Header = () => {
 				</Box>
 			</BrowserView>
 			<MobileView>
-				{/* <Box as='nav' className='grid grid-flow-col auto-cols-auto p-3 shadow-md shadow-b-1 -shadow-spread-1 shadow-slate-200'>
-					<Box>
-						<Box as='button' className='md:text-common text-[28px]' onClick={handleOpenMenu}>
-							{isOpenMenu ? <MdMenuOpen /> : <MdMenu />}
-						</Box>
-					</Box>
-					<Box className='flex-grow text-center'>
-						<h1 className='md:text-common font-bold text-lg lg:text-xlc'>{title}</h1>
-					</Box>
-					<Box className='ml-auto'>
-						<Avatar size='sm' src='https://bit.ly/broken-link' />
-					</Box>
-				</Box> */}
-				<Box as='nav' className='flex justify-between py-3 px-6 shadow-sm shadow-b-0.5 shadow-slate-100'>
+				<Box as='nav' className='flex justify-between py-3 px-5 shadow-sm shadow-b-0.5 shadow-slate-100'>
 					<h1 className={classes.title}>
-                        {icon} {title}
-                    </h1>
-					<Avatar size='sm' src='https://bit.ly/broken-link' />
+						{icon} {title}
+					</h1>
+					<Box className='flex items-center'>
+						<Avatar size='sm' src='https://bit.ly/broken-link' name={username} />
+						<Button variant='text' className='ml-2' onClick={handleLogout}>
+							<RiLogoutBoxLine className='text-2xl' />
+						</Button>
+					</Box>
 				</Box>
 			</MobileView>
 			<Sidebar isOpen={isOpenMenu} onClose={() => setIsOpenMenu(false)} />

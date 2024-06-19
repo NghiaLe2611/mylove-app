@@ -45,7 +45,7 @@ const routes = [
 	{ path: '*', element: <NotFound /> },
 ];
 
-// export default routes;
-export default function Routes() {
-	return useRoutes(routes);
-}
+export default routes;
+// export default function Routes() {
+// 	return useRoutes(routes);
+// }

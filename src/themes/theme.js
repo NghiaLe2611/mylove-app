@@ -16,10 +16,10 @@ const theme = extendTheme({
 			baseStyle: () => ({
 				field: {
 					backgroundColor: 'var(--input) !important',
-                    '_focusVisible': {
-                        'border-color': 'var(--primary) !important',
-                        'box-shadow': '0 0 0 1px var(--primary) !important'
-                    }
+					'&:focus-visible': {
+						borderColor: 'var(--primary) !important',
+						boxShadow: '0 0 0 1px var(--primary) !important',
+					},
 				},
 			}),
 		},

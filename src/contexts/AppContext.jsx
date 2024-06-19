@@ -1,10 +1,25 @@
-import { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import { getExpireTime, logout } from '@/api/auth/authService';
+import Cookies from 'js-cookie';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 const AppContext = createContext();
 const AppUpdaterContext = createContext();
 
+const token = Cookies.get('access_token');
+
 const AppProvider = ({ children }) => {
+	// const { token } = useSelector((state) => state.auth);
 	const [data, setData] = useState([]);
+
+	const dispatchFn = useDispatch();
+
+	useEffect(() => {
+		const isValid = getExpireTime(token);
+		if (!isValid) {
+            logout(null, dispatchFn);
+		}
+	}, []);
 
 	const state = useMemo(() => {
 		return {
