@@ -133,10 +133,10 @@ const GiftApp = () => {
 	);
 
 	return (
-		<div>
+		<>
 			<div className='content px-2'>
 				<div className='flex items-center justify-between md:justify-center mx-auto my-4 flex-wrap max-w-[600px]'>
-					<p className='w-full text-center mb-5 md:mb-20 font-medium text-lg md:text-3xl'>You are</p>
+					<p className='w-full text-center mb-10 md:mb-20 font-medium text-lg md:text-3xl'>You are</p>
 					<button
 						className={classNames('btn-gender md:mr-20', {
 							active: gender === 'male',
@@ -173,7 +173,7 @@ const GiftApp = () => {
 			<Modal isOpen={isModalOpen} onClose={closeModal}>
 				<Form setFormValue={handleSetFormData} formData={data} />
 			</Modal>
-		</div>
+		</>
 	);
 };
 

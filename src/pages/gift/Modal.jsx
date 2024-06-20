@@ -26,7 +26,7 @@ const Modal = ({ isOpen, onClose, children }) => {
 	return (
 		<div className={`${modalClass} z-50 bg-black bg-opacity-50`}>
 			<div className='bg-white p-4 rounded-lg w-[90%] max-w-[500px] relative' ref={modalOverlayRef}>
-				<h2 className='text-center font-bold text-lg mb-5'>Add present</h2>
+				<h2 className='text-center font-bold text-lg text-black mb-5'>Add present</h2>
 				<button onClick={onClose} className='text-[25px] absolute top-1 right-2 m-2 text-gray-600'>
 					&times;
 				</button>

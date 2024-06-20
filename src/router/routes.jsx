@@ -1,9 +1,8 @@
-import { Component, Suspense, lazy } from 'react';
 import NotFound from '@/components/NotFound';
 import Loader from '@/components/loader';
-import MainLayout from '@/layouts/MainLayout';
-import { useRoutes } from 'react-router-dom';
 import PrivateRoute from '@/components/route/PrivateRoute';
+import MainLayout from '@/layouts/MainLayout';
+import { Suspense, lazy } from 'react';
 
 // eslint-disable-next-line react/display-name
 const Loadable = (Component) => (props) => (

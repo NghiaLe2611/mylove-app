@@ -13,10 +13,9 @@ const MainLayout = () => {
 			<Header />
 			<Box
 				as='main'
-				className={`${path ? path : 'home'} mx-auto max-w-screen-xl w-full px-3 md:px-0 pt-5 pb-16 md:pb-5 overflow-y-auto`}
-				flex={1}
-				px={5}>
-				<FadeIn>
+				className={`${path ? path : 'home'} mx-auto max-w-screen-xl w-full px-4 md:px-0 py-5 overflow-y-auto`}
+				flex={1}>
+				<FadeIn className='h-full w-full'>
 					<Outlet />
 				</FadeIn>
 			</Box>

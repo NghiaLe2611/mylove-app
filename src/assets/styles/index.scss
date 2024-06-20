@@ -5,21 +5,25 @@
 #root{
     @apply rounded-lg md:rounded-none;
     @apply m-1 md:m-0 overflow-y-hidden md:overflow-y-auto;
-    background-color: #fff;
-    height: 100vh;
+    background-color: var(--bg);
     overflow-y: auto;
+    height: 100vh;
 }
 
 :root {
 	--primary: #2db064; // #48914b
     --text-common: #535353;
     --input: #eff1f2;
+    --bg: #fff;
+    --shadow: 189, 189, 189;
 }
 
-.dark-theme {
+.chakra-ui-dark {
     --primary: #2db064;
-    --text-common: #ffffff;
+    --text-common: #f1f1f1;
     --input: #282828;
+    --bg: #202320;
+    --shadow: 95, 95, 95;
 }
 
 body {
@@ -34,6 +38,10 @@ html,body{
     min-height: auto;
 }
 
+main{
+    max-height: calc(100vh - 120px);
+}
+
 a{
     text-decoration: none;
     outline: none;
@@ -46,9 +54,19 @@ a{
 }
 
 .background{
-    @apply bg-[url('/images/background.png')];
+    // @apply bg-[url('/images/background.png')];
+    @apply bg-[url('/images/bg-light.jpg')];
 }
 
-.dark-theme .background{
-    @apply bg-[url('/images/background-dark.png')];
+.chakra-ui-dark .background{
+    // @apply bg-[url('/images/background-dark.png')];
+}
+
+@media (min-width: 1200px) {
+    #root {
+        height: auto;
+    }
+    main{
+        max-height: initial;
+    }
 }

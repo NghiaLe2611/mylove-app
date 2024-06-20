@@ -2,6 +2,13 @@
     @apply md:bg-primary md:px-3 md:py-2 xl:px-0 xl:py-0;
 }
 
+.nav{
+    @apply flex justify-between py-3 px-5;
+    // shadow-sm shadow-slate-100
+    box-shadow: 0 1px 1px 1px rgba(var(--shadow), 0.25);
+
+}
+
 .nav-list{
     @apply flex items-center justify-center;
 }

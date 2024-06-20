@@ -5,3 +5,38 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+.wrapper {
+    @apply h-full;
+
+    .item {
+        @apply flex-1;
+        @apply font-medium text-lg;
+
+        a{
+            @apply h-full w-full flex items-center justify-center;
+        }
+
+        &.lucky-money {
+            @apply text-white;
+            background: url(images/lucky-money.jpg) no-repeat center center;
+        }
+
+        &.travel {
+            @apply text-white;
+            background: url(images/travel.jpg) no-repeat center center;
+        }
+
+        &.badminton {
+            @apply text-white;
+            background: url(images/badminton.jpg) no-repeat;
+            background-size: 100%;
+            background-position: 0 50%;
+        }
+
+        &.diary {
+            @apply text-white;
+            background: url(images/diary.jpg) no-repeat;
+        }
+    }
+}
