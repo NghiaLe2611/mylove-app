@@ -1,5 +1,5 @@
 import { login } from '@/api/auth/authService';
-import { Button, FormControl, FormErrorMessage, FormHelperText, Input } from '@chakra-ui/react';
+import { Button, FormControl, FormErrorMessage, FormHelperText, Image, Input } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,6 +30,21 @@ const fadeInUp = {
 	},
 };
 
+const fadeInDown = {
+	initial: {
+		y: -30,
+		opacity: 0,
+	},
+	animate: {
+		y: 0,
+		opacity: 1,
+		transition: {
+			duration: 0.4,
+			ease: 'easeIn',
+		},
+	},
+};
+
 const AuthPage = () => {
 	const { isLoggedIn } = useSelector((state) => state.auth);
 
@@ -56,11 +71,12 @@ const AuthPage = () => {
 		return <Navigate to='/' />;
 	}
 
-	console.log(errors['email']);
-
 	return (
 		<div className={`${classes.container} background`}>
-			<motion.div variants={fadeInUp} initial='initial' animate='animate' className='m-auto w-full'>
+			<motion.div variants={fadeInDown} initial='initial' animate='animate' className='w-full'>
+				<Image src='/images/love-img.png' alt='image' width={100} className='mx-auto mb-10' />
+			</motion.div>
+			<motion.div variants={fadeInUp} initial='initial' animate='animate' className='w-full'>
 				<h1 className={classes.title}>
 					Welcome to my app. <br /> This is app for our love.
 				</h1>

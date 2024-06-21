@@ -54,12 +54,11 @@ a{
 }
 
 .background{
-    // @apply bg-[url('/images/background.png')];
-    @apply bg-[url('/images/bg-light.jpg')];
+    @apply bg-[url('/images/light-pattern.png')];
 }
 
 .chakra-ui-dark .background{
-    // @apply bg-[url('/images/background-dark.png')];
+    @apply bg-[url('/images/dark-pattern.png')];
 }
 
 @media (min-width: 1200px) {

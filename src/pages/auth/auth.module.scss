@@ -1,12 +1,18 @@
-.container{
-    @apply h-full p-8 flex items-center;
+.container {
+    @apply h-full p-8;
     @apply bg-no-repeat bg-cover relative
 }
 
-.title{
-    @apply font-bold text-xl text-center mb-10 text-white;
+.title {
+    @apply font-bold text-xl text-center mb-10;
     // background: #004400;
     // background: linear-gradient(to left, #004400 0%, #30D533 60%, #3BEFFF 100%);
     // -webkit-background-clip: text;
     // -webkit-text-fill-color: transparent;
+}
+
+@media (orientation: landscape) {
+    .title {
+        background-color: red !important;
+    }
 }
