@@ -1,49 +1,21 @@
 import { login } from '@/api/auth/authService';
-import { Button, FormControl, FormErrorMessage, FormHelperText, Image, Input } from '@chakra-ui/react';
+import FadeInDown from '@/components/animations/FadeInDown';
+import FadeInUp from '@/components/animations/FadeInUp';
+import useCustomToast from '@/hooks/useCustomToast';
+import { Button, FormControl, FormHelperText, Image, Input } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import * as yup from 'yup';
 import classes from './auth.module.scss';
-import { motion } from 'framer-motion';
-import { Navigate } from 'react-router-dom';
-import useCustomToast from '@/hooks/useCustomToast';
-import classNames from 'classnames';
+import FormError from '@/components/form/FormError';
 
 const authSchema = yup.object().shape({
 	email: yup.string().required('Email is required'),
 	password: yup.string().required('Password is required'),
 });
-
-const fadeInUp = {
-	initial: {
-		y: 80,
-		opacity: 0,
-	},
-	animate: {
-		y: 0,
-		opacity: 1,
-		transition: {
-			duration: 0.6,
-			ease: 'easeInOut',
-		},
-	},
-};
-
-const fadeInDown = {
-	initial: {
-		y: -30,
-		opacity: 0,
-	},
-	animate: {
-		y: 0,
-		opacity: 1,
-		transition: {
-			duration: 0.4,
-			ease: 'easeIn',
-		},
-	},
-};
 
 const AuthPage = () => {
 	const { isLoggedIn } = useSelector((state) => state.auth);
@@ -52,6 +24,7 @@ const AuthPage = () => {
 		register,
 		handleSubmit,
 		formState: { errors },
+		getValues,
 	} = useForm({
 		resolver: yupResolver(authSchema),
 	});
@@ -73,10 +46,10 @@ const AuthPage = () => {
 
 	return (
 		<div className={`${classes.container} background`}>
-			<motion.div variants={fadeInDown} initial='initial' animate='animate' className='w-full'>
+			<FadeInDown>
 				<Image src='/images/love-img.png' alt='image' width={100} className='mx-auto mb-10' />
-			</motion.div>
-			<motion.div variants={fadeInUp} initial='initial' animate='animate' className='w-full'>
+			</FadeInDown>
+			<FadeInUp>
 				<h1 className={classes.title}>
 					Welcome to my app. <br /> This is app for our love.
 				</h1>
@@ -93,7 +66,7 @@ const AuthPage = () => {
 								placeholder='Enter your email'
 								defaultValue='nghiapro2611@gmail.com'
 							/>
-							<FormHelperText className='!text-red-600 font-medium'>{errors['email']?.message}</FormHelperText>
+                            <FormError message={errors['email']?.message} />
 						</FormControl>
 						<FormControl className='my-6'>
 							<Input
@@ -106,14 +79,14 @@ const AuthPage = () => {
 								placeholder='Enter your password'
 								{...register('password')}
 							/>
-							<FormHelperText className='!text-red-600 font-medium'>{errors['password']?.message}</FormHelperText>
+                            <FormError message={errors['password']?.message} />
 						</FormControl>
 					</div>
 					<Button type='submit' size='lg' className='w-full !bg-primary !text-white !text-base'>
 						Login
 					</Button>
 				</form>
-			</motion.div>
+			</FadeInUp>
 		</div>
 	);
 };

@@ -49,7 +49,7 @@ const Header = () => {
 						<h1 className='md:text-common font-bold text-lg lg:text-[1.5rem]'>{title}</h1>
 					</Box>
 					<Box className='ml-auto'>
-						<Avatar size='sm' src='https://bit.ly/broken-link' name={username} color='#fff' />
+						<Avatar size='sm' src='https://bit.ly/broken-link' name={username} className='bg-primary' color='#fff' />
 					</Box>
 				</Box>
 			</BrowserView>
@@ -59,7 +59,7 @@ const Header = () => {
 						{icon} {title}
 					</h1>
 					<HStack spacing={4}>
-						<Avatar size='sm' src='https://bit.ly/broken-link' name={username} color='#fff' />
+						<Avatar size='sm' src='https://bit.ly/broken-link' name={username} className='!bg-primary' color='#fff' />
 						<span onClick={toggleColorMode}>
 							{colorMode === 'dark' ? <MdDarkMode className='text-2xl' /> : <MdOutlineLightMode className='text-2xl' />}
 						</span>

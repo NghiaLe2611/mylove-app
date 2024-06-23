@@ -1,0 +1,16 @@
+.title{
+    @apply font-medium;
+}
+
+.prev,.next{
+    @apply static;
+    &:after{
+        font-size: 20px;
+        font-weight: bold;
+    }
+    &:disabled{
+        opacity: 0.35;
+        cursor: auto;
+        pointer-events: none;
+    }
+}

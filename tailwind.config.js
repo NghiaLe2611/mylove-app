@@ -14,7 +14,8 @@ export default {
 			colors: {
 				'primary': 'var(--primary)',
                 'common': 'var(--text-common)',
-                'input': 'var(--input)'
+                'input': 'var(--input)',
+                'background': 'var(--bg)'
 			},
 		},
 	},

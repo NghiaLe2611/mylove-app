@@ -1,0 +1,29 @@
+.heading{
+    @apply font-medium text-lg mb-4;
+}
+
+.slider {
+    @apply h-full w-full pb-10;
+    max-height: 300px;
+
+    .item {
+        @apply relative;
+        max-width: 150px;
+        img{
+            object-fit: cover;
+            @apply h-full w-full;
+        }
+    }
+}
+
+.title {
+    @apply absolute top-10 left-[50%] text-lg text-white font-medium rounded-sm text-center;
+    background-color: rgba(0, 0, 0, 0.4);
+    width: calc(100% - 20px);
+    transform: translateX(-50%);
+}
+
+.time {
+    @apply absolute bottom-2 right-2 rounded-sm text-white text-sm p-2 leading-none;
+    background-color: rgba(0, 0, 0, 0.4);
+}

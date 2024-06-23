@@ -14,6 +14,7 @@ const Loadable = (Component) => (props) => (
 const HomePage = Loadable(lazy(() => import('@/pages/home')));
 const AuthPage = Loadable(lazy(() => import('@/pages/auth')));
 const TravelPage = Loadable(lazy(() => import('@/pages/travel')));
+const TravelDetail = Loadable(lazy(() => import('@/pages/travel/detail')));
 const GiftPage = Loadable(lazy(() => import('@/pages/gift')));
 // const BadmintonPage = Loadable(lazy(() => import('@/pages/home')));
 // const DiaryPage = Loadable(lazy(() => import('@/pages/home')));
@@ -35,6 +36,10 @@ const routes = [
 				path: '/travel',
 				element: <PrivateRoute><TravelPage /></PrivateRoute>,
 			},
+            {
+                path: '/travel/:id',
+                element: <PrivateRoute><TravelDetail /></PrivateRoute>
+            },
 			{
 				path: '/gift',
 				element: <PrivateRoute><GiftPage /></PrivateRoute>,

@@ -11,6 +11,9 @@ export default defineConfig(() => {
 	// expand(env);
 
 	return {
+        server: {
+            hmr: false
+        },
 		define: {
 			'process.env': {},
 			global: {},

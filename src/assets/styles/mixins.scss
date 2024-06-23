@@ -1,0 +1,20 @@
+@mixin scrollbar($size: 6px) {
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+        width: $size !important;
+    }
+
+    &::-webkit-scrollbar-track {
+        // background-color: var(--bg-scrollbar-track) !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--bg-scrollbar-thumb) !important;
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar:horizontal {
+        height: $size;
+    }
+}

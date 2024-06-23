@@ -9,17 +9,35 @@ const breakpoints = {
 	'2xl': '1920px',
 };
 
+const focusVisibleStyle = {
+	backgroundColor: 'var(--input) !important',
+	'&:focus-visible': {
+		borderColor: 'var(--primary) !important',
+		boxShadow: '0 0 0 1px var(--primary) !important',
+	},
+};
+
 const theme = extendTheme({
 	breakpoints,
+	colors: {
+		primary: {
+			500: 'var(--primary)',
+			600: 'var(--primary-01)', // hover
+			700: 'var(--primary-02)', // click
+		},
+	},
 	components: {
 		Input: {
 			baseStyle: () => ({
-				field: {
-					backgroundColor: 'var(--input) !important',
-					'&:focus-visible': {
-						borderColor: 'var(--primary) !important',
-						boxShadow: '0 0 0 1px var(--primary) !important',
-					},
+				field: focusVisibleStyle
+			}),
+		},
+		Textarea: {
+			baseStyle: () => ({
+				backgroundColor: 'var(--input) !important',
+				'&:focus-visible': {
+					borderColor: 'var(--primary) !important',
+					boxShadow: '0 0 0 1px var(--primary) !important',
 				},
 			}),
 		},
