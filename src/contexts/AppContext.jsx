@@ -1,7 +1,7 @@
 import { getExpireTime, logout } from '@/api/auth/authService';
 import Cookies from 'js-cookie';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const AppContext = createContext();
 const AppUpdaterContext = createContext();

@@ -16,7 +16,7 @@ const axiosClient = axios.create({
 // Add a request interceptor
 axiosClient.interceptors.request.use((config) => {
     const customHeaders = {};
-    const accessToken = Cookies.get('token') ;
+    const accessToken = Cookies.get('access_token') ;
     
     if (accessToken) {
         customHeaders.Authorization = `Bearer ${accessToken}`;

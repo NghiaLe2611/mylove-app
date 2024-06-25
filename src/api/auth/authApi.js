@@ -1,9 +1,9 @@
 import axiosClient from '@/api/axiosClient';
 
-export const authLogin = (user) => {
+export const authLogin = (email) => {
 	return axiosClient.post(
-		'/api/auth/login',
-		user,
+		`${import.meta.env.VITE_API_URL}/api/auth/login`,
+		email,
 		// {
 		//     withCredentials: true,
 		// }
@@ -12,7 +12,7 @@ export const authLogin = (user) => {
 
 export const authLogout = (email) => {
 	return axiosClient.post(
-		'/api/auth/logout',
+		`${import.meta.env.VITE_API_URL}/api/auth/logout`,
 		{
 			email,
 		},
