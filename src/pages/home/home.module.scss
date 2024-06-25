@@ -8,10 +8,11 @@
 
 .wrapper {
     @apply h-full;
-
+    @apply md:grid grid-cols-3 gap-3 md:py-10;
     .item {
         @apply flex-1;
         @apply font-medium text-lg;
+        @apply md:max-w-md md:h-[300px];
 
         a{
             @apply h-full w-full flex items-center justify-center;

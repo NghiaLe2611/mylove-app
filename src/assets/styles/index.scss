@@ -55,9 +55,13 @@ a{
 }
 
 .home{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @apply flex items-center justify-center;
+    @apply md:block;
+}
+
+.wrap-content{
+    @apply h-full w-full px-4 md:px-0 py-5 overflow-y-auto;
+    @apply md:h-auto;
 }
 
 .background{

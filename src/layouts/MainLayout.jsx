@@ -9,13 +9,13 @@ const MainLayout = () => {
 	const { path } = useTitle();
 
 	return (
-		<Box display='flex' flexDirection='column' className='h-full md:p-0 relative'>
+		<Box display='flex' flexDirection='column' className='h-full md:p-0 md:h-auto relative'>
 			<Header />
 			<Box
 				as='main'
 				className={`${path ? path : 'home'} mx-auto max-w-screen-xl w-full overflow-y-hidden`}
 				flex={1}>
-				<FadeIn className='h-full w-full px-4 md:px-0 py-5 overflow-y-auto'>
+				<FadeIn className='wrap-content'>
 					<Outlet />
 				</FadeIn>
 			</Box>

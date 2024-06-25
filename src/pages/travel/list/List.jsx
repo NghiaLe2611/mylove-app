@@ -9,9 +9,11 @@ import { useNavigate } from 'react-router-dom';
 
 const List = ({ data }) => {
 	const navigate = useNavigate();
+    
 	const handleClick = (id) => {
 		navigate(`/travel/${id}`);
 	};
+
 	return (
 		<>
 			<h3 className={classes.heading}>All Trips</h3>

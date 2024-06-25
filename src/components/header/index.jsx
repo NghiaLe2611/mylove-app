@@ -1,4 +1,20 @@
-import { Avatar, Box, Button, HStack, Image, Text, useColorMode } from '@chakra-ui/react';
+import {
+	Avatar,
+	Box,
+	Button,
+	HStack,
+	Image,
+	Text,
+	Menu,
+	MenuButton,
+	MenuList,
+	MenuItem,
+	MenuItemOption,
+	MenuGroup,
+	MenuOptionGroup,
+	MenuDivider,
+	useColorMode,
+} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
 import { Link, useLocation } from 'react-router-dom';
@@ -42,15 +58,29 @@ const Header = () => {
 					<Box>
 						<Link to='/' className='flex items-center'>
 							<Image src='/images/love-img.png' alt='logo' maxW={`40px`} />
-							<Text className='md:text-common ml-2 font-medium'>My Love App</Text>
+							<Text className='md:text-white ml-2 font-medium'>My Love App</Text>
 						</Link>
 					</Box>
 					<Box className='flex-grow text-center'>
-						<h1 className='md:text-common font-bold text-lg lg:text-[1.5rem]'>{title}</h1>
+						<h1 className='md:text-white font-bold text-lg lg:text-[1.5rem]'>{title}</h1>
 					</Box>
-					<Box className='ml-auto'>
-						<Avatar size='sm' src='https://bit.ly/broken-link' name={username} className='bg-primary' color='#fff' />
-					</Box>
+					<Menu>
+						<MenuButton>
+							<Box className='ml-auto flex items-center cursor-pointer'>
+								<Avatar
+									size='sm'
+									src='https://bit.ly/broken-link'
+									name={username}
+									className='bg-primary mr-2'
+									color='#fff'
+								/>
+								<span className='text-white'>{username}</span>
+							</Box>
+						</MenuButton>
+						<MenuList>
+							<MenuItem onClick={handleLogout}>Log out</MenuItem>
+						</MenuList>
+					</Menu>
 				</Box>
 			</BrowserView>
 			<MobileView>

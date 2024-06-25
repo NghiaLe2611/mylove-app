@@ -21,10 +21,10 @@ const TravelApp = () => {
 		return (
 			<div className='flex flex-col h-full'>
 				<FadeInDown>
-					<div className='flex items-center mb-6 font-bold text-3xl md:text-2xl'>
+					<div className='flex items-center mb-6 font-bold text-3xl md:text-4xl'>
 						<p>
-							{`Let's Plan`}
-							<br />
+							{`Let's Plan `}
+							<br className='md:hidden' />
 							Your <span className='text-primary'>Vacation</span>
 						</p>
 						<img src='/images/plane.png' alt='plane' className='ml-10' width={40} />
@@ -36,10 +36,10 @@ const TravelApp = () => {
 	return (
 		<div className='flex flex-col h-full'>
 			<FadeInDown>
-				<div className='flex items-center mb-6 font-bold text-3xl md:text-2xl'>
+				<div className='flex items-center mb-6 font-bold text-3xl md:text-4xl'>
 					<p>
-						{`Let's Plan`}
-						<br />
+						{`Let's Plan `}
+						<br className='md:hidden' />
 						Your <span className='text-primary'>Vacation</span>
 					</p>
 					<img src='/images/plane.png' alt='plane' className='ml-10' width={40} />

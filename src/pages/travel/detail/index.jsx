@@ -59,27 +59,20 @@ const Detail = () => {
 	}
 
 	return (
-		<div
-			className='h-full'
-			style={{
-				marginLeft: '-1rem',
-				marginRight: '-1rem',
-				marginTop: '-1.25rem',
-				marginBottom: '-1.25rem',
-			}}>
+		<div className={classes.detail}>
 			<div dangerouslySetInnerHTML={{ __html: style }} />
 
 			<div className='relative h-full'>
 				{data ? (
 					<>
-						<span
-							className={classes.backBtn}
-							onClick={() => {
-								navigate(-1);
-							}}>
-							<IoIosArrowBack className='text-sm' />
-						</span>
 						<div className={classes.img}>
+							<span
+								className={classes.backBtn}
+								onClick={() => {
+									navigate(-1);
+								}}>
+								<IoIosArrowBack className='text-sm' />
+							</span>
 							<div className={classes.wrapBtn}>
 								<Button className={classes.circleBtn} onClick={onOpen} colorScheme='green'>
 									<MdAdd />
@@ -102,7 +95,7 @@ const Detail = () => {
 							)}
 						</div>
 						<div className={classes.content}>
-							<div className='flex items-center justify-between mb-3'>
+							<div className='flex items-center justify-between mb-3 md:mb-10'>
 								<h2 className={classes.title}>{data.name}</h2>
 								<span>{moment(data.time).format('DD/MM/YYYY')}</span>
 							</div>
