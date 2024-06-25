@@ -19,24 +19,24 @@
 
         &.lucky-money {
             @apply text-white;
-            background: url(images/lucky-money.jpg) no-repeat center center;
+            background: url(/images/lucky-money.jpg) no-repeat center center;
         }
 
         &.travel {
             @apply text-white;
-            background: url(images/travel.jpg) no-repeat center center;
+            background: url(/images/travel.jpg) no-repeat center center;
         }
 
         &.badminton {
             @apply text-white;
-            background: url(images/badminton.jpg) no-repeat;
+            background: url(/images/badminton.jpg) no-repeat;
             background-size: 100%;
             background-position: 0 50%;
         }
 
         &.diary {
             @apply text-white;
-            background: url(images/diary.jpg) no-repeat;
+            background: url(/images/diary.jpg) no-repeat;
         }
     }
 }
