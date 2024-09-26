@@ -1,9 +1,11 @@
 import axiosClient from '@/api/axiosClient';
 import { travelApiEndpoint } from '@/constants';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const getAllTrips = async () => {
 	try {
-		const res = await axiosClient(import.meta.env.VITE_API_URL + `${travelApiEndpoint}/travel-list`);
+		const res = await axiosClient(API_URL + `${travelApiEndpoint}/list`);
 		const { status_code, data } = res.data;
 		if (status_code === 200) {
 			return data;
@@ -21,7 +23,7 @@ export const getAllTrips = async () => {
 
 export const addTrip = async (item) => {
 	try {
-		const res = await axiosClient.post(import.meta.env.VITE_API_URL + `${travelApiEndpoint}/add`, item);
+		const res = await axiosClient.post(API_URL + `${travelApiEndpoint}/add`, item);
 		return res.data;
 	} catch (err) {
 		if (err.response) {
@@ -34,7 +36,7 @@ export const addTrip = async (item) => {
 
 export const editTrip = async (item) => {
 	try {
-		const res = await axiosClient.put(import.meta.env.VITE_API_URL + `${travelApiEndpoint}/${item.id}`, item.data);
+		const res = await axiosClient.put(API_URL + `${travelApiEndpoint}/${item.id}`, item.data);
 		return res.data;
 	} catch (err) {
 		if (err.response) {
@@ -47,7 +49,7 @@ export const editTrip = async (item) => {
 
 export const getDetailTrip = async (id) => {
 	try {
-		const res = await axiosClient(import.meta.env.VITE_API_URL + `${travelApiEndpoint}/${id}`);
+		const res = await axiosClient(API_URL + `${travelApiEndpoint}/${id}`);
 		const { status_code, data } = res.data;
 		if (status_code === 200) {
 			return data;
@@ -65,7 +67,7 @@ export const getDetailTrip = async (id) => {
 
 export const addDestination = async (item) => {
 	try {
-		const res = await axiosClient.post(import.meta.env.VITE_API_URL + `${travelApiEndpoint}/add/destination`, item);
+		const res = await axiosClient.post(API_URL + `${travelApiEndpoint}/add/destination`, item);
 		return res.data;
 	} catch (err) {
 		if (err.response) {

@@ -12,13 +12,14 @@ import FormError from '@/components/form/FormError';
 const tripSchema = yup.object({
 	name: yup.string().required(`Trip's name is required`),
 	time: yup.string().required('Date is required'),
+	place: yup.string().required('Place is required'),
 	image: yup.string().nullable().optional(),
-	destination: yup.array().of(
-		yup.object().shape({
-			name: yup.string().required(`Destionation's name is required`),
-			description: yup.string().required('Description is required'),
-		}),
-	),
+	// destination: yup.array().of(
+	// 	yup.object().shape({
+	// 		name: yup.string().required(`Destionation's name is required`),
+	// 		description: yup.string().required('Description is required'),
+	// 	}),
+	// ),
 });
 
 const AddModal = ({ isOpen, onClose, refetchItems }) => {
@@ -46,7 +47,7 @@ const AddModal = ({ isOpen, onClose, refetchItems }) => {
 	} = useForm({
 		resolver: yupResolver(tripSchema),
 	});
-    
+
 	// const { fields } = useFieldArray({
 	// 	control,
 	// 	name: 'images',
@@ -84,6 +85,17 @@ const AddModal = ({ isOpen, onClose, refetchItems }) => {
 									{...register('name')}
 									placeholder='Trip'
 								/>
+								<FormError message={errors['place']?.message} />
+							</FormControl>
+							<FormControl className='my-2'>
+								<Input
+									name='name'
+									className='!text-sm'
+									isInvalid={Boolean(errors['place'])}
+									errorBorderColor='red.500'
+									{...register('place')}
+									placeholder='Accomodation'
+								/>
 								<FormError message={errors['name']?.message} />
 							</FormControl>
 							<FormControl className='my-2'>
@@ -96,7 +108,7 @@ const AddModal = ({ isOpen, onClose, refetchItems }) => {
 									type='date'
 									{...register('time')}
 								/>
-                                <FormError message={errors['time']?.message} />
+								<FormError message={errors['time']?.message} />
 							</FormControl>
 							<FormControl className='my-2'>
 								<Input

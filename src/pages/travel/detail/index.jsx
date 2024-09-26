@@ -17,8 +17,7 @@ const Detail = () => {
 	const { id } = useParams();
 	const [isEdit, setIsEdit] = useState();
 	const { isFetching, data, refetch, error } = useQuery({
-		queryKey: ['detail_destination'],
-		id,
+		queryKey: ['detail_destination', id],
 		queryFn: () => getDetailTrip(id),
 		staleTime: 60 * 1000,
 		refetchOnWindowFocus: false,
@@ -95,9 +94,10 @@ const Detail = () => {
 							)}
 						</div>
 						<div className={classes.content}>
-							<div className='flex items-center justify-between mb-3 md:mb-10'>
+							<div className='flex flex-wrap items-center justify-between mb-3 md:mb-10'>
 								<h2 className={classes.title}>{data.name}</h2>
 								<span>{moment(data.time).format('DD/MM/YYYY')}</span>
+								<p className='w-full mt-2'>Accomodation: {data?.place}</p>
 							</div>
 							<Items data={data.destination} />
 						</div>

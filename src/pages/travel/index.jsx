@@ -13,6 +13,7 @@ const TravelApp = () => {
 		queryFn: () => getAllTrips(),
 		staleTime: 60 * 1000,
 		refetchOnWindowFocus: false,
+		refetchOnMount: true,
 	});
 
 	const { isOpen, onOpen, onClose } = useDisclosure();

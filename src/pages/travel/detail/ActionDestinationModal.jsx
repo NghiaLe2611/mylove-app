@@ -13,7 +13,7 @@ import {
 	Textarea,
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { MdClose } from 'react-icons/md';
 import * as yup from 'yup';
@@ -37,12 +37,15 @@ const editSchema = yup.object({
 
 const ActionDestinationModal = ({ isOpen, onClose, refetchItems, editData, isEdit }) => {
 	const showToast = useCustomToast();
+	const queryClient = useQueryClient();
 	const mutation = useMutation({
 		mutationFn: isEdit ? editTrip : addDestination,
 		onSuccess: (data) => {
 			const { message } = data;
 			showToast(message, null, 'bottom');
-			refetchItems();
+			// refetchItems();
+            queryClient.invalidateQueries(['detail_destination', editData?._id]);
+			// queryClient.invalidateQueries('list_destination');
 			onClose();
 		},
 		onError: (error, variables, context) => {
@@ -68,6 +71,7 @@ const ActionDestinationModal = ({ isOpen, onClose, refetchItems, editData, isEdi
 			setValue('time', moment(editData.time).format('YYYY-MM-DD'));
 			setValue('image', editData.image);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [editData, isEdit]);
 
 	// const { fields } = useFieldArray({
@@ -76,20 +80,19 @@ const ActionDestinationModal = ({ isOpen, onClose, refetchItems, editData, isEdi
 	// });
 
 	const onSubmit = (data) => {
-		console.log(editData);
 		if (isEdit) {
 			const date = new Date(data.time);
 			const timestamp = date.getTime();
 			const submitData = {
-                name: data.name,
+				name: data.name,
 				time: timestamp,
-                image: data.image
+				image: data.image,
 			};
 
 			mutation.mutate({
-                id: editData._id, 
-                data: submitData
-            });
+				id: editData._id,
+				data: submitData,
+			});
 		} else {
 			mutation.mutate({
 				id: editData._id,
