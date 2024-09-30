@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import moment from 'moment';
 import { useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
-import { MdAdd, MdEdit, MdFavoriteBorder } from 'react-icons/md';
+import { MdAdd, MdDelete, MdEdit, MdFavoriteBorder } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router-dom';
 import ActionDestinationModal from './ActionDestinationModal';
 import Items from './Items';
@@ -79,8 +79,11 @@ const Detail = () => {
 								<Button className={classes.circleBtn} onClick={handleEdit}>
 									<MdEdit />
 								</Button>
-								<Button className={`${classes.circleBtn} !text-white`} colorScheme='red'>
+								{/* <Button className={`${classes.circleBtn} !text-white`} colorScheme='red'>
 									<MdFavoriteBorder />
+								</Button> */}
+								<Button className={`${classes.circleBtn} !text-white`} colorScheme='red'>
+									<MdDelete />
 								</Button>
 							</div>
 							{data.image ? (

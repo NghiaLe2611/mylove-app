@@ -65,10 +65,15 @@ export const getDetailTrip = async (id) => {
 	}
 };
 
-export const addDestination = async (item) => {
+export const deleteTrip = async (id) => {
 	try {
-		const res = await axiosClient.post(API_URL + `${travelApiEndpoint}/add/destination`, item);
-		return res.data;
+		const res = await axiosClient.delete(API_URL + `${travelApiEndpoint}/${id}`);
+		const { status_code, data } = res.data;
+		if (status_code === 200) {
+			return data;
+		}
+
+		throw new Error(`API Error: ${status_code}`);
 	} catch (err) {
 		if (err.response) {
 			throw err;
@@ -77,3 +82,16 @@ export const addDestination = async (item) => {
 		}
 	}
 };
+
+// export const addDestination = async (item) => {
+// 	try {
+// 		const res = await axiosClient.post(API_URL + `${travelApiEndpoint}/add/destination`, item);
+// 		return res.data;
+// 	} catch (err) {
+// 		if (err.response) {
+// 			throw err;
+// 		} else {
+// 			throw new Error(err);
+// 		}
+// 	}
+// };

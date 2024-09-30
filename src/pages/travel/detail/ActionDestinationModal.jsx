@@ -1,26 +1,25 @@
-import { addDestination, addTrip, editTrip } from '@/api/travelApi';
+import { editTrip } from '@/api/travelApi';
+import classes from '@/assets/styles/modal.module.scss';
+import FormError from '@/components/form/FormError';
 import useCustomToast from '@/hooks/useCustomToast';
 import {
-	Button,
-	FormControl,
-	FormHelperText,
-	Input,
-	Modal,
-	ModalBody,
-	ModalContent,
-	ModalHeader,
-	ModalOverlay,
-	Textarea,
+    Button,
+    FormControl,
+    Input,
+    Modal,
+    ModalBody,
+    ModalContent,
+    ModalHeader,
+    ModalOverlay,
+    Textarea
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import moment from 'moment';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { MdClose } from 'react-icons/md';
 import * as yup from 'yup';
-import classes from '@/assets/styles/modal.module.scss';
-import FormError from '@/components/form/FormError';
-import { useEffect } from 'react';
-import moment from 'moment';
 
 const addSchema = yup.object({
 	name: yup.string().required('Trip is required'),
@@ -39,12 +38,13 @@ const ActionDestinationModal = ({ isOpen, onClose, refetchItems, editData, isEdi
 	const showToast = useCustomToast();
 	const queryClient = useQueryClient();
 	const mutation = useMutation({
-		mutationFn: isEdit ? editTrip : addDestination,
+		// mutationFn: isEdit ? editTrip : addDestination,
+		mutationFn: editTrip,
 		onSuccess: (data) => {
 			const { message } = data;
 			showToast(message, null, 'bottom');
 			// refetchItems();
-            queryClient.invalidateQueries(['detail_destination', editData?._id]);
+			queryClient.invalidateQueries(['detail_destination', editData?._id]);
 			// queryClient.invalidateQueries('list_destination');
 			onClose();
 		},
@@ -94,9 +94,12 @@ const ActionDestinationModal = ({ isOpen, onClose, refetchItems, editData, isEdi
 				data: submitData,
 			});
 		} else {
+			// Add destination
 			mutation.mutate({
 				id: editData._id,
-				data,
+				data: {
+					destination: data,
+				},
 			});
 		}
 	};

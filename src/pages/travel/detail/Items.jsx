@@ -32,9 +32,9 @@ const Items = ({ data }) => {
 
 	if (data && data.length) {
 		return (
-			<div className='md:grid md:grid-cols-2 gap-4'>
+			<div className='md:grid md:grid-cols-2 gap-4 lg:gap-8'>
 				{data.map((item) => (
-					<div key={item.name} className='w-full pb-5'>
+					<div key={item.name} className='w-full '>
 						<Card>
 							<CardBody>
 								<Swiper slidesPerView={'auto'} spaceBetween={5} className='mb-2'>
