@@ -1,42 +1,92 @@
-import { Card, CardBody, Image, Link } from '@chakra-ui/react';
+import { editTrip } from '@/api/travelApi';
+import { useConfirm } from '@/hooks/useConfirm';
+import useCustomToast from '@/hooks/useCustomToast';
+import { Button, Card, CardBody, Image, Link } from '@chakra-ui/react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import classNames from 'classnames';
 import { useRef } from 'react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
-import { Navigation, Pagination } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import moment from 'moment';
+import { MdClear } from 'react-icons/md';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import classes from './items.module.scss';
-import { BrowserView, MobileView } from 'react-device-detect';
-import classNames from 'classnames';
 
-const Items = ({ data }) => {
-	const navigationPrevRef = useRef(null);
-	const navigationNextRef = useRef(null);
-	const swiperRef = useRef(null);
+const Items = ({ data, id, refetch }) => {
+	// const navigationPrevRef = useRef(null);
+	// const navigationNextRef = useRef(null);
+	// const swiperRef = useRef(null);
 
-	const updateNavigationDisabled = () => {
-		if (!swiperRef.current || !swiperRef.current.swiper) return;
+	// const updateNavigationDisabled = () => {
+	// 	if (!swiperRef.current || !swiperRef.current.swiper) return;
 
-		const { activeIndex } = swiperRef.current.swiper;
+	// 	const { activeIndex } = swiperRef.current.swiper;
 
-		if (navigationPrevRef.current) {
-			navigationPrevRef.current.disabled = activeIndex === 0;
-		}
+	// 	if (navigationPrevRef.current) {
+	// 		navigationPrevRef.current.disabled = activeIndex === 0;
+	// 	}
 
-		if (navigationNextRef.current) {
-			navigationNextRef.current.disabled = activeIndex === data.length - 1;
-		}
+	// 	if (navigationNextRef.current) {
+	// 		navigationNextRef.current.disabled = activeIndex === data.length - 1;
+	// 	}
+	// };
+	const queryClient = useQueryClient();
+	const idRef = useRef(null);
+	const showToast = useCustomToast();
+
+	const mutation = useMutation({
+		mutationFn: editTrip,
+		onSuccess: (data) => {
+			const { message } = data;
+			showToast(message, null, 'bottom');
+			queryClient.invalidateQueries(['detail_destination', id]);
+		},
+		onError: (error, variables, context) => {
+			const errMsg = error.response?.data?.message || error.message;
+			alert(errMsg);
+			showToast(errMsg, 'error', 'bottom');
+		},
+	});
+
+	const { openDialog, ConfirmDialog } = useConfirm({
+		title: 'Delete destination',
+		description: `Are you sure to delete this destination ?`,
+		onConfirm: () => {
+			if (idRef.current) {
+				mutation.mutate({
+					id,
+					data: {
+						id: idRef.current,
+						action: 'delete',
+						destination: data,
+					},
+				});
+			}
+		},
+	});
+
+	const handleDeleteDestination = (e, item) => {
+		e.stopPropagation();
+		idRef.current = item._id;
+		openDialog();
 	};
 
 	if (data && data.length) {
 		return (
 			<div className='md:grid md:grid-cols-2 gap-4 lg:gap-8'>
 				{data.map((item) => (
-					<div key={item.name} className='w-full '>
+					<div key={item.name} className='w-full'>
 						<Card>
-							<CardBody>
+							<CardBody className='relative'>
+								<Button
+									variant='ghost'
+									colorScheme='red'
+									className='!rounded-full !w-8 !h-8 !p-0 !min-w-0 !absolute top-1 right-1'
+									// icon={<MdClear />}
+									onClick={(e) => handleDeleteDestination(e, item)}>
+									<MdClear />
+								</Button>
 								<Swiper slidesPerView={'auto'} spaceBetween={5} className='mb-2'>
 									{item.images.length ? (
 										item.images.concat(item.images).map((img, index) => (
@@ -78,6 +128,7 @@ const Items = ({ data }) => {
 						</Card>
 					</div>
 				))}
+				<ConfirmDialog />
 			</div>
 		);
 	}

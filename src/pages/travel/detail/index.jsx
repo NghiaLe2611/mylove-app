@@ -1,7 +1,7 @@
-import { getDetailTrip } from '@/api/travelApi';
+import { deleteTrip, getDetailTrip } from '@/api/travelApi';
 import Loader from '@/components/loader';
 import { Button, Image, useDisclosure } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import moment from 'moment';
 import { useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
@@ -10,11 +10,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ActionDestinationModal from './ActionDestinationModal';
 import Items from './Items';
 import classes from './detail.module.scss';
+import { useConfirm } from '@/hooks/useConfirm';
+import useCustomToast from '@/hooks/useCustomToast';
 
-const style = `<style>header {display: none;}</style>`;
+const style = `<style>.header {display: none;}</style>`;
 
 const Detail = () => {
 	const { id } = useParams();
+	const queryClient = useQueryClient();
 	const [isEdit, setIsEdit] = useState();
 	const { isFetching, data, refetch, error } = useQuery({
 		queryKey: ['detail_destination', id],
@@ -23,8 +26,31 @@ const Detail = () => {
 		refetchOnWindowFocus: false,
 		enabled: id ? true : false,
 	});
+	const showToast = useCustomToast();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const navigate = useNavigate();
+	const mutation = useMutation({
+		mutationFn: deleteTrip,
+		onSuccess: (data) => {
+			const { message } = data;
+			showToast(message, null, 'bottom');
+			queryClient.invalidateQueries(['list_destination']);
+			navigate(-1);
+		},
+		onError: (error, variables, context) => {
+			const errMsg = error.response?.data?.message || error.message;
+			alert(errMsg);
+			showToast(errMsg, 'error', 'bottom');
+		},
+	});
+
+	const { openDialog, ConfirmDialog } = useConfirm({
+		title: 'Delete trip',
+		description: `Are you sure to delete this trip ?`,
+		onConfirm: () => {
+			mutation.mutate(id);
+		},
+	});
 
 	const handleEdit = () => {
 		onOpen();
@@ -57,6 +83,10 @@ const Detail = () => {
 		);
 	}
 
+	const handleDeleteTrip = (item) => {
+		openDialog();
+	};
+
 	return (
 		<div className={classes.detail}>
 			<div dangerouslySetInnerHTML={{ __html: style }} />
@@ -82,7 +112,7 @@ const Detail = () => {
 								{/* <Button className={`${classes.circleBtn} !text-white`} colorScheme='red'>
 									<MdFavoriteBorder />
 								</Button> */}
-								<Button className={`${classes.circleBtn} !text-white`} colorScheme='red'>
+								<Button className={`${classes.circleBtn} !text-white`} colorScheme='red' onClick={handleDeleteTrip}>
 									<MdDelete />
 								</Button>
 							</div>
@@ -102,7 +132,7 @@ const Detail = () => {
 								<span>{moment(data.time).format('DD/MM/YYYY')}</span>
 								<p className='w-full mt-2'>Accomodation: {data?.place}</p>
 							</div>
-							<Items data={data.destination} />
+							<Items data={data.destination} id={data._id} refetch={refetch} />
 						</div>
 					</>
 				) : (
@@ -121,6 +151,7 @@ const Detail = () => {
 			</div>
 
 			<ActionDestinationModal isEdit={isEdit} isOpen={isOpen} onClose={handleClose} refetchItems={refetch} editData={data} />
+			<ConfirmDialog />
 		</div>
 	);
 };

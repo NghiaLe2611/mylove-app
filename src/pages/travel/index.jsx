@@ -8,7 +8,7 @@ import { useDisclosure } from '@chakra-ui/react';
 import FavoriteList from './favorite/FavoriteList';
 
 const TravelApp = () => {
-	const { isLoading, isFetching, refetch, data } = useQuery({
+	const { isLoading, refetch, data } = useQuery({
 		queryKey: ['list_destination'],
 		queryFn: () => getAllTrips(),
 		staleTime: 60 * 1000,
@@ -34,6 +34,7 @@ const TravelApp = () => {
 			</div>
 		);
 	}
+
 	return (
 		<div className='flex flex-col h-full'>
 			<FadeInDown>

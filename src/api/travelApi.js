@@ -68,12 +68,7 @@ export const getDetailTrip = async (id) => {
 export const deleteTrip = async (id) => {
 	try {
 		const res = await axiosClient.delete(API_URL + `${travelApiEndpoint}/${id}`);
-		const { status_code, data } = res.data;
-		if (status_code === 200) {
-			return data;
-		}
-
-		throw new Error(`API Error: ${status_code}`);
+		return res.data;
 	} catch (err) {
 		if (err.response) {
 			throw err;

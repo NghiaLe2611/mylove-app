@@ -52,7 +52,7 @@ const Header = () => {
 	};
 
 	return (
-		<Box as='header' className={classes.header}>
+		<Box as='header' className={`${classes.header} header`}>
 			<BrowserView>
 				<Box as='nav' className='w-full grid grid-cols-[150px_1fr_150px] py-2 items-center mx-auto max-w-screen-xl'>
 					<Box>

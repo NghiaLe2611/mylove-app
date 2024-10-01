@@ -99,6 +99,7 @@ const ActionDestinationModal = ({ isOpen, onClose, refetchItems, editData, isEdi
 				id: editData._id,
 				data: {
 					destination: data,
+                    action: 'add'
 				},
 			});
 		}
