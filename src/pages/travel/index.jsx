@@ -55,7 +55,7 @@ const TravelApp = () => {
 			{data?.length ? (
 				<div className='flex-1'>
 					<List data={data} />
-					<FavoriteList data={data} />
+					{/* <FavoriteList data={data} /> */}
 				</div>
 			) : (
 				<div className='flex-1 flex items-center justify-center'>No destination now. Please add one !</div>

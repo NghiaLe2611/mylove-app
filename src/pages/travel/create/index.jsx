@@ -12,7 +12,7 @@ import FormError from '@/components/form/FormError';
 const tripSchema = yup.object({
 	name: yup.string().required(`Trip's name is required`),
 	time: yup.string().required('Date is required'),
-	place: yup.string().required('Place is required'),
+	// place: yup.string().required('Place is required'),
 	image: yup.string().nullable().optional(),
 	// destination: yup.array().of(
 	// 	yup.object().shape({
@@ -87,7 +87,7 @@ const AddModal = ({ isOpen, onClose, refetchItems }) => {
 								/>
 								<FormError message={errors['place']?.message} />
 							</FormControl>
-							<FormControl className='my-2'>
+							{/* <FormControl className='my-2'>
 								<Input
 									name='name'
 									className='!text-sm'
@@ -97,7 +97,7 @@ const AddModal = ({ isOpen, onClose, refetchItems }) => {
 									placeholder='Accomodation'
 								/>
 								<FormError message={errors['name']?.message} />
-							</FormControl>
+							</FormControl> */}
 							<FormControl className='my-2'>
 								<Input
 									name='time'
