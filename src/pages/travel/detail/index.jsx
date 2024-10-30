@@ -1,18 +1,19 @@
 import { deleteTrip, getDetailTrip } from '@/api/travelApi';
 import Loader from '@/components/loader';
-import { Button, Image, Tabs, TabList, TabPanels, Tab, TabPanel, useDisclosure } from '@chakra-ui/react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import moment from 'moment';
-import { useState } from 'react';
-import { IoIosArrowBack } from 'react-icons/io';
-import { MdAdd, MdDelete, MdEdit, MdFavoriteBorder } from 'react-icons/md';
-import { useNavigate, useParams } from 'react-router-dom';
-import ActionDestinationModal from './ActionDestinationModal';
-import Items from './Items';
-import classes from './detail.module.scss';
 import { useConfirm } from '@/hooks/useConfirm';
 import useCustomToast from '@/hooks/useCustomToast';
+import { Button, Image, Tab, TabList, TabPanel, TabPanels, Tabs, useDisclosure } from '@chakra-ui/react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import moment from 'moment';
+import { useCallback, useState } from 'react';
+import { IoIosArrowBack } from 'react-icons/io';
+import { MdAdd, MdDelete, MdEdit } from 'react-icons/md';
+import { useNavigate, useParams } from 'react-router-dom';
 import Accomodation from './Accomodation';
+import ActionDestinationModal from './ActionDestinationModal';
+import Foods from './Foods';
+import Items from './Items';
+import classes from './detail.module.scss';
 const style = `<style>.header {display: none;}</style>`;
 
 const Detail = () => {
@@ -20,6 +21,7 @@ const Detail = () => {
     const queryClient = useQueryClient();
     const [isEdit, setIsEdit] = useState();
     const [tabIndex, setTabIndex] = useState(0);
+
     const { isFetching, data, refetch, error } = useQuery({
         queryKey: ['detail_destination', id],
         queryFn: () => getDetailTrip(id),
@@ -63,6 +65,10 @@ const Detail = () => {
         setIsEdit(false);
     };
 
+    const handleRefetch = useCallback(() => {
+        refetch();
+    }, []);
+
     if (isFetching) {
         return <Loader />;
     }
@@ -83,6 +89,10 @@ const Detail = () => {
             </div>
         );
     }
+
+    const handleTabChange = (index) => {
+        setTabIndex(index);
+    };
 
     const handleDeleteTrip = (item) => {
         openDialog();
@@ -133,10 +143,11 @@ const Detail = () => {
                                 <span>{moment(data.time).format('DD/MM/YYYY')}</span>
                                 {/* <p className='w-full mt-2'>Accomodation: {data?.place}</p> */}
                             </div>
-                            <Tabs isFitted onChange={index => setTabIndex(index)} >
+                            <Tabs isFitted onChange={handleTabChange} index={tabIndex}>
                                 <TabList>
                                     <Tab>Accomodation</Tab>
                                     <Tab>Destinations</Tab>
+                                    <Tab>Foods</Tab>
                                 </TabList>
 
                                 <TabPanels>
@@ -144,7 +155,10 @@ const Detail = () => {
                                         <Accomodation initData={data} />
                                     </TabPanel>
                                     <TabPanel>
-                                        <Items data={data.destination} id={data._id} refetch={refetch} />
+                                        <Items data={data.destination} id={data._id} refetch={handleRefetch} />
+                                    </TabPanel>
+                                    <TabPanel>
+                                        <Foods initData={data} />
                                     </TabPanel>
                                 </TabPanels>
                             </Tabs>

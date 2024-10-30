@@ -12,14 +12,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import classes from './items.module.scss';
-
-function formatDate(dateString) {
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
-}
+import { formatDate } from '@/utils';
 
 const Items = ({ data, id, refetch }) => {
     // const navigationPrevRef = useRef(null);
@@ -85,7 +78,7 @@ const Items = ({ data, id, refetch }) => {
             <div className='md:grid md:grid-cols-2 gap-4 lg:gap-8'>
                 {data.map((item) => (
                     <div key={item.name} className='w-full'>
-                        <Card>
+                        <Card className='h-full'>
                             <CardBody className='relative'>
                                 <Button
                                     variant='ghost'
@@ -107,7 +100,7 @@ const Items = ({ data, id, refetch }) => {
                                                     <Image
                                                         src={img}
                                                         alt={`${item.name} ${index}`}
-                                                        className='rounded-md mx-1 object-cover h-full w-full md:max-w-[300px]'
+                                                        className='rounded-md mx-auto object-cover h-[120px] max-w-[200px]'
                                                     />
                                                 </SwiperSlide>
                                             ))
@@ -119,7 +112,7 @@ const Items = ({ data, id, refetch }) => {
                                                 <Image
                                                     src={item.images}
                                                     alt={item.images}
-                                                    className='rounded-md mx-auto object-cover h-full w-full max-w-[150px]'
+                                                    className='rounded-md mx-auto object-cover h-[120px] max-w-[200px]'
                                                 />
                                             </SwiperSlide>
                                         )
@@ -128,7 +121,7 @@ const Items = ({ data, id, refetch }) => {
                                             <Image
                                                 src='/images/no-image.png'
                                                 alt='no-image'
-                                                className='w-full border boder-1 md:max-w-[300px]'
+                                                    className='rounded-md mx-auto object-cover h-[120px] max-w-[200px]'
                                             />
                                         </div>
                                     )}
@@ -137,7 +130,10 @@ const Items = ({ data, id, refetch }) => {
                                     <div className={classes.title}>{item.name}</div>
                                     <div className='text-sm'>{formatDate(item.date)} - {item.time}</div>
                                 </div>
-                                <div className='text-sm'>{item.description}</div>
+                                <div className='text-sm'>
+                                    {/* {item.description} */}
+                                    <p dangerouslySetInnerHTML={{ __html: item.description.replace(/\n/g, '<br />') }} />
+                                </div>
                                 {item.map_url ? (
                                     <div className='text-right'>
                                         <Link href={item.map_url} target='_blank' className='inline-flex items-center !text-blue-700'>
