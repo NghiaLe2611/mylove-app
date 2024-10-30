@@ -135,23 +135,11 @@ const ActionDestinationModal = ({ isOpen, onClose, refetchItems, editData, isEdi
                                 </FormControl>
                                 <FormControl className='my-2'>
                                     <Input
-                                        name='date'
-                                        className='!text-sm'
-                                        isInvalid={Boolean(errors['date'])}
-                                        errorBorderColor='red.500'
-                                        placeholder='Date'
-                                        type='date'
-                                        {...register('date')}
-                                    />
-                                    <FormError message={errors['date']?.message} />
-                                </FormControl>
-                                <FormControl className='my-2'>
-                                    <Input
                                         name='time'
                                         className='!text-sm'
                                         isInvalid={Boolean(errors['time'])}
                                         errorBorderColor='red.500'
-                                        placeholder='Time'
+                                        placeholder='Date'
                                         type='date'
                                         {...register('time')}
                                     />
