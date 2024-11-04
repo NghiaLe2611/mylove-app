@@ -14,6 +14,7 @@ import ActionDestinationModal from './ActionDestinationModal';
 import Foods from './Foods';
 import Items from './Items';
 import classes from './detail.module.scss';
+import Photos from './Photos';
 const style = `<style>.header {display: none;}</style>`;
 
 const Detail = () => {
@@ -144,10 +145,11 @@ const Detail = () => {
                                 {/* <p className='w-full mt-2'>Accomodation: {data?.place}</p> */}
                             </div>
                             <Tabs isFitted onChange={handleTabChange} index={tabIndex}>
-                                <TabList>
+                                <TabList overflowX="scroll" overflowY='hidden'>
                                     <Tab>Accomodation</Tab>
                                     <Tab>Destinations</Tab>
                                     <Tab>Foods</Tab>
+                                    <Tab>Photos</Tab>
                                 </TabList>
 
                                 <TabPanels>
@@ -159,6 +161,9 @@ const Detail = () => {
                                     </TabPanel>
                                     <TabPanel>
                                         <Foods initData={data} />
+                                    </TabPanel>
+                                    <TabPanel>
+                                        <Photos initData={data} />
                                     </TabPanel>
                                 </TabPanels>
                             </Tabs>

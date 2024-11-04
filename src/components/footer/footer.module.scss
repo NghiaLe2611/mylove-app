@@ -1,8 +1,8 @@
 .footer {
-    @apply grid md:hidden;
+    @apply grid md:hidden z-10;
     grid-auto-flow: column;
     grid-auto-columns: minmax(95px, 1fr);
-    box-shadow: 0px -1px 2px rgba(var(--shadow), 0.25);
+    box-shadow: 0px -1px 2px rgba(var(--shadow), 0.5);
     margin-top: auto;
     // overflow-x: auto;
     // transform: translateX(-50%);

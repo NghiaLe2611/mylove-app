@@ -42,5 +42,5 @@
 }
 
 iframe {
-    @apply max-w-full max-h-[250px];
+    @apply w-full max-h-[250px] md:max-h-[400px];
 }

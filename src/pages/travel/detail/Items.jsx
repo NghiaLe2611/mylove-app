@@ -126,7 +126,7 @@ const Items = ({ data, id, refetch }) => {
                                         </div>
                                     )}
                                 </Swiper>
-                                <div className='flex justify-between mb-1'>
+                                <div className='md:flex justify-between mb-1'>
                                     <div className={classes.title}>{item.name}</div>
                                     <div className='text-sm'>{formatDate(item.date)} - {item.time}</div>
                                 </div>
