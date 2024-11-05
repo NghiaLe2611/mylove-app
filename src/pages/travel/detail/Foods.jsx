@@ -78,7 +78,7 @@ const Foods = ({ initData }) => {
                                         <p>Address: {item?.address}</p>
                                         <p>Date: {item?.date ? formatDate(item.date) : null} {item?.time ? `- ${item.time}` : null}</p>
                                         <p>
-                                            <Link href={item.map} target='_blank' className='inline-flex items-center !text-blue-700'>
+                                            <Link href={item.map} target='_blank' className='inline-flex items-center !text-blue-600'>
                                                 Map <FaMapMarkedAlt className='ml-1' />
                                             </Link>
                                         </p>

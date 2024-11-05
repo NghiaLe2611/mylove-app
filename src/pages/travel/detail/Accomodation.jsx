@@ -26,7 +26,9 @@ const Accomodation = ({ initData }) => {
         onSuccess: (data) => {
             const { message } = data;
             showToast(message, null, 'bottom');
-            queryClient.invalidateQueries(['detail_destination', initData?._id]);
+            // queryClient.invalidateQueries(['detail_destination', initData?._id]);
+            queryClient.setQueryData(['detail_destination', initData?._id], data.data);
+            setIsEdit(false);
         },
         onError: (error, variables, context) => {
             const errMsg = error.response?.data?.message || error.message;
@@ -60,7 +62,6 @@ const Accomodation = ({ initData }) => {
             setValue('map', initData.place?.map);
             setValue('vehicleMap', initData.place?.vehicleMap);
         }
-
     }, []);
 
     const onSubmit = (data) => {
@@ -144,6 +145,7 @@ const Accomodation = ({ initData }) => {
                             </FormControl>
                             <div className='space-x-2 !my-5 text-center'>
                                 <Button
+                                    size='sm'
                                     colorScheme='blue'
                                     onClick={() => setIsEdit((prev) => !prev)}
                                     className={classNames({
@@ -151,7 +153,7 @@ const Accomodation = ({ initData }) => {
                                     })}>
                                     Edit
                                 </Button>
-                                <Button colorScheme='green'>Save</Button>
+                                <Button size='sm' colorScheme='green' type='submit'>Save</Button>
                             </div>
                         </div>
                     </form>

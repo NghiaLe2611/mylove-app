@@ -1,30 +1,25 @@
+import { logout } from '@/api/auth/authService';
+import useTitle from '@/hooks/useTitle';
 import {
-	Avatar,
-	Box,
-	Button,
-	HStack,
-	Image,
-	Text,
-	Menu,
-	MenuButton,
-	MenuList,
-	MenuItem,
-	MenuItemOption,
-	MenuGroup,
-	MenuOptionGroup,
-	MenuDivider,
-	useColorMode,
+    Avatar,
+    Box,
+    HStack,
+    Image,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+    Text,
+    useColorMode
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
+import { MdDarkMode, MdOutlineLightMode } from 'react-icons/md';
+import { RiLogoutBoxLine } from 'react-icons/ri';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import Sidebar from '../sidebar';
 import classes from './header.module.scss';
-import useTitle from '@/hooks/useTitle';
-import { useDispatch, useSelector } from 'react-redux';
-import { RiLogoutBoxLine } from 'react-icons/ri';
-import { logout } from '@/api/auth/authService';
-import { MdDarkMode, MdOutlineLightMode } from 'react-icons/md';
 // import { MdMenu, MdMenuOpen } from 'react-icons/md';
 
 const Header = () => {

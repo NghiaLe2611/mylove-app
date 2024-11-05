@@ -1,17 +1,18 @@
 import { addTrip } from '@/api/travelApi';
+import classes from '@/assets/styles/modal.module.scss';
+import FormError from '@/components/form/FormError';
 import useCustomToast from '@/hooks/useCustomToast';
-import { Button, FormControl, FormHelperText, Input, Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react';
+import { Button, FormControl, Input, Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { MdClose } from 'react-icons/md';
 import * as yup from 'yup';
-import classes from '@/assets/styles/modal.module.scss';
-import FormError from '@/components/form/FormError';
 
 const tripSchema = yup.object({
 	name: yup.string().required(`Trip's name is required`),
-	time: yup.string().required('Date is required'),
+	startDate: yup.string().required('Start date is required'),
+    endDate: yup.string().nullable().optional(),
 	// place: yup.string().required('Place is required'),
 	image: yup.string().nullable().optional(),
 	// destination: yup.array().of(
@@ -100,16 +101,25 @@ const AddModal = ({ isOpen, onClose, refetchItems }) => {
 							</FormControl> */}
 							<FormControl className='my-2'>
 								<Input
-									name='time'
+									name='startDate'
 									className='!text-sm'
-									isInvalid={Boolean(errors['time'])}
+									isInvalid={Boolean(errors['startDate'])}
 									errorBorderColor='red.500'
 									placeholder='Start date'
 									type='date'
-									{...register('time')}
+									{...register('startDate')}
 								/>
-								<FormError message={errors['time']?.message} />
+                                <FormError message={errors['startDate']?.message} />
 							</FormControl>
+                            <FormControl className='my-2'>
+                                <Input
+                                    name='endDate'
+                                    className='!text-sm'
+                                    placeholder='End date'
+                                    type='date'
+                                    {...register('endDate')}
+                                />
+                            </FormControl>
 							<FormControl className='my-2'>
 								<Input
 									name='image'

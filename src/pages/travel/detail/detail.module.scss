@@ -27,7 +27,7 @@
 
 .circleBtn {
     @apply rounded-full w-12 h-12 p-0 mx-1 #{!important};
-
+    @apply text-white;
     svg {
         @apply text-xl #{!important};
     }

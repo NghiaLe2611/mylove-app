@@ -115,16 +115,16 @@ const Detail = () => {
                                 <IoIosArrowBack className='text-sm' />
                             </span>
                             <div className={classes.wrapBtn}>
-                                <Button className={classes.circleBtn} onClick={onOpen} colorScheme='green'>
+                                <Button className={classes.circleBtn} onClick={onOpen} colorScheme='green' bg='green.500'>
                                     <MdAdd />
                                 </Button>
-                                <Button className={classes.circleBtn} onClick={handleEdit}>
+                                <Button className={classes.circleBtn} onClick={handleEdit} colorScheme='blue' bg='blue.500'>
                                     <MdEdit />
                                 </Button>
                                 {/* <Button className={`${classes.circleBtn} !text-white`} colorScheme='red'>
 									<MdFavoriteBorder />
 								</Button> */}
-                                <Button className={`${classes.circleBtn} !text-white`} colorScheme='red' onClick={handleDeleteTrip}>
+                                <Button className={`${classes.circleBtn} !text-white`} bg='red.500' colorScheme='red' onClick={handleDeleteTrip}>
                                     <MdDelete />
                                 </Button>
                             </div>
@@ -141,7 +141,9 @@ const Detail = () => {
                         <div className={classes.content}>
                             <div className='flex flex-wrap items-center justify-between mb-3 md:mb-10'>
                                 <h2 className={classes.title}>{data.name}</h2>
-                                <span>{moment(data.time).format('DD/MM/YYYY')}</span>
+                                <span>{moment(data.startDate).format('DD/MM/YYYY')}
+                                    {data.endDate && ` - ${moment(data.endDate).format('DD/MM/YYYY') }`}
+                                </span>
                                 {/* <p className='w-full mt-2'>Accomodation: {data?.place}</p> */}
                             </div>
                             <Tabs isFitted onChange={handleTabChange} index={tabIndex}>

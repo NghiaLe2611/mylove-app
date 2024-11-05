@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import classes from '@/assets/styles/list.module.scss';
+import classes from './list.module.scss';
 import { Pagination } from 'swiper/modules';
 import { Image } from '@chakra-ui/react';
 import moment from 'moment';
@@ -35,7 +35,12 @@ const List = ({ data }) => {
 								<Image src='/images/no-image.png' alt='no-image' className='rounded-2xl object-cover h-full' />
 							)}
 							<div className={classes.title}>{item.name}</div>
-							<div className={classes.time}>{moment(item.time).format('DD/MM/YYYY')}</div>
+							<div className={classes.time}>
+                                {moment(item.startDate).format('DD/MM/YYYY')}
+                                {
+                                    item.endDate ? ` - ${moment(item.endDate).format('DD/MM/YYYY') }` : null
+                                }
+                            </div>
 						</SwiperSlide>
 					))}
 				</Swiper>

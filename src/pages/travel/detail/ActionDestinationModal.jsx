@@ -23,8 +23,8 @@ import * as yup from 'yup';
 
 const addSchema = yup.object({
     name: yup.string().required('Trip is required'),
-    date: yup.string().required('Date is required'),
-    time: yup.string().nullable().optional(),
+    startDate: yup.string().required('Date is required'),
+    endDate: yup.string().nullable().optional(),
     map_url: yup.string().nullable().optional(),
     images: yup.string().nullable().optional(),
     description: yup.string().required('Description is required'),
@@ -32,8 +32,8 @@ const addSchema = yup.object({
 
 const editSchema = yup.object({
     name: yup.string().required(`Trip is required`),
-    date: yup.string().required('Date is required'),
-    time: yup.string().nullable().optional(),
+    startDate: yup.string().required('Date is required'),
+    endDate: yup.string().nullable().optional(),
     images: yup.string().nullable().optional(),
 });
 
@@ -71,7 +71,8 @@ const ActionDestinationModal = ({ isOpen, onClose, refetchItems, editData, isEdi
     useEffect(() => {
         if (editData && isEdit) {
             setValue('name', editData.name);
-            setValue('time', moment(editData.time).format('YYYY-MM-DD'));
+            setValue('startDate', moment(editData.startDate).format('YYYY-MM-DD'));
+            setValue('endDate', moment(editData?.endDate).format('YYYY-MM-DD'));
             setValue('images', editData.image);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -84,13 +85,17 @@ const ActionDestinationModal = ({ isOpen, onClose, refetchItems, editData, isEdi
 
     const onSubmit = (data) => {
         if (isEdit) {
-            const date = new Date(data.time);
-            const timestamp = date.getTime();
+            const startDate = new Date(data.startDate);
+
             const submitData = {
                 name: data.name,
-                time: timestamp,
+                startDate: startDate.getTime(),
                 images: data.images,
             };
+
+            if (data.endDate) {
+                submitData.endDate = new Date(data.endDate).getTime();
+            }
 
             mutation.mutate({
                 id: editData._id,
@@ -135,27 +140,25 @@ const ActionDestinationModal = ({ isOpen, onClose, refetchItems, editData, isEdi
                                 </FormControl>
                                 <FormControl className='my-2'>
                                     <Input
-                                        name='date'
+                                        name='startDate'
                                         className='!text-sm'
-                                        isInvalid={Boolean(errors['date'])}
+                                        isInvalid={Boolean(errors['startDate'])}
                                         errorBorderColor='red.500'
-                                        placeholder='Date'
+                                        placeholder='Start date'
                                         type='date'
-                                        {...register('date')}
+                                        {...register('startDate')}
                                     />
                                     <FormError message={errors['date']?.message} />
                                 </FormControl>
                                 <FormControl className='my-2'>
                                     <Input
-                                        name='time'
+                                        name='endDate'
                                         className='!text-sm'
-                                        isInvalid={Boolean(errors['time'])}
                                         errorBorderColor='red.500'
-                                        placeholder='Time'
+                                        placeholder='End date'
                                         type='date'
-                                        {...register('time')}
+                                        {...register('endDate')}
                                     />
-                                    <FormError message={errors['time']?.message} />
                                 </FormControl>
                                 <FormControl className='my-2'>
                                     <Input
