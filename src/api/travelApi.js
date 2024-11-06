@@ -1,11 +1,12 @@
 import axiosClient from '@/api/axiosClient';
-import { travelApiEndpoint } from '@/constants';
+import { photoApiEndpoint, travelApiEndpoint } from '@/constants';
+import { getDirectoryPhotoPath } from '@/utils';
 
-const API_URL = import.meta.env.VITE_API_URL;
+// const API_URL = import.meta.env.VITE_API_URL;
 
 export const getAllTrips = async () => {
 	try {
-		const res = await axiosClient(API_URL + `${travelApiEndpoint}/list`);
+        const res = await axiosClient(`${travelApiEndpoint}/list`);
 		const { status_code, data } = res.data;
 		if (status_code === 200) {
 			return data;
@@ -23,7 +24,7 @@ export const getAllTrips = async () => {
 
 export const addTrip = async (item) => {
 	try {
-		const res = await axiosClient.post(API_URL + `${travelApiEndpoint}/add`, item);
+        const res = await axiosClient.post(`${travelApiEndpoint}/add`, item);
 		return res.data;
 	} catch (err) {
 		if (err.response) {
@@ -36,7 +37,7 @@ export const addTrip = async (item) => {
 
 export const editTrip = async (item) => {
 	try {
-		const res = await axiosClient.put(API_URL + `${travelApiEndpoint}/${item.id}`, item.data);
+        const res = await axiosClient.put(`${travelApiEndpoint}/${item.id}`, item.data);
 		return res.data;
 	} catch (err) {
 		if (err.response) {
@@ -49,7 +50,7 @@ export const editTrip = async (item) => {
 
 export const getDetailTrip = async (id) => {
 	try {
-		const res = await axiosClient(API_URL + `${travelApiEndpoint}/${id}`);
+        const res = await axiosClient(`${travelApiEndpoint}/${id}`);
 		const { status_code, data } = res.data;
 		if (status_code === 200) {
 			return data;
@@ -67,7 +68,7 @@ export const getDetailTrip = async (id) => {
 
 export const deleteTrip = async (id) => {
 	try {
-		const res = await axiosClient.delete(API_URL + `${travelApiEndpoint}/${id}`);
+        const res = await axiosClient.delete(`${travelApiEndpoint}/${id}`);
 		return res.data;
 	} catch (err) {
 		if (err.response) {
@@ -76,6 +77,23 @@ export const deleteTrip = async (id) => {
 			throw new Error(err);
 		}
 	}
+};
+
+export const getTripPhotos = async (name) => {
+    console.log('getTripPhotos');
+
+    const directory = getDirectoryPhotoPath(name);
+    try {
+        const res = await axiosClient(`${photoApiEndpoint}/${directory}`);
+        console.log(222, res);
+        return res.data;
+    } catch (err) {
+        if (err.response) {
+            throw err;
+        } else {
+            throw new Error(err);
+        }
+    }
 };
 
 // export const addDestination = async (item) => {

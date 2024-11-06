@@ -13,8 +13,6 @@ function getFirstSlug(str) {
 
 const Footer = () => {
     const location = useLocation();
-    console.log(123, location);
-
     const handleClick = (e, url) => {
         if (url === location.pathname || (getFirstSlug(location.pathname) === getFirstSlug(url))) {
             e.preventDefault();

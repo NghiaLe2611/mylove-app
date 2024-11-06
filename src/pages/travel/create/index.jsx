@@ -55,12 +55,17 @@ const AddModal = ({ isOpen, onClose, refetchItems }) => {
 	// });
 
 	const onSubmit = (data) => {
-		const date = new Date(data.time);
-		const timestamp = date.getTime();
+        const startDate = new Date(data.startDate);
+
 		const submitData = {
 			...data,
-			time: timestamp,
+            startDate: startDate.getTime(),
 		};
+
+        if (data.endDate) {
+            submitData.endDate = new Date(data.endDate).getTime();
+        }
+        
 		mutation.mutate(submitData);
 	};
 

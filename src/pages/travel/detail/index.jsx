@@ -106,13 +106,13 @@ const Detail = () => {
             <div className='relative h-full'>
                 {data ? (
                     <>
-                        <div className={classes.img}>
+                        <div className={`${classes.img} flex items-center justify-center`}>
                             <span
                                 className={classes.backBtn}
                                 onClick={() => {
                                     navigate(-1);
                                 }}>
-                                <IoIosArrowBack className='text-sm' />
+                                <IoIosArrowBack className='text-xl' />
                             </span>
                             <div className={classes.wrapBtn}>
                                 <Button className={classes.circleBtn} onClick={onOpen} colorScheme='green' bg='green.500'>
@@ -132,9 +132,9 @@ const Detail = () => {
                                 <Image src={data.image} alt={data.name} className='h-full w-full object-cover' />
                             ) : (
                                 <Image
-                                    src='https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg'
+                                    src='/images/no-image.png'
                                     alt='no-image'
-                                    className='h-full w-full object-cover'
+                                    className='object-fit max-h-[160px] max-w-[auto]'
                                 />
                             )}
                         </div>
@@ -165,7 +165,7 @@ const Detail = () => {
                                         <Foods initData={data} />
                                     </TabPanel>
                                     <TabPanel>
-                                        <Photos initData={data} />
+                                        <Photos name={data.name} activeTab={tabIndex} />
                                     </TabPanel>
                                 </TabPanels>
                             </Tabs>
