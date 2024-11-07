@@ -2,12 +2,12 @@ import { deleteTrip, getDetailTrip } from '@/api/travelApi';
 import Loader from '@/components/loader';
 import { useConfirm } from '@/hooks/useConfirm';
 import useCustomToast from '@/hooks/useCustomToast';
-import { Button, Image, Tab, TabList, TabPanel, TabPanels, Tabs, useDisclosure } from '@chakra-ui/react';
+import { Button, createStylesContext, Image, Tab, TabList, TabPanel, TabPanels, Tabs, useDisclosure } from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import moment from 'moment';
 import { useCallback, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
-import { MdAdd, MdDelete, MdEdit } from 'react-icons/md';
+import { MdAdd, MdDelete, MdEdit, MdFileUpload } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router-dom';
 import Accomodation from './Accomodation';
 import ActionDestinationModal from './ActionDestinationModal';
@@ -15,13 +15,22 @@ import Foods from './Foods';
 import Items from './Items';
 import classes from './detail.module.scss';
 import Photos from './Photos';
+import ImageUpload from './ImageUpload';
 const style = `<style>.header {display: none;}</style>`;
 
+const tabStyles = {
+    _selected: {
+        bg: 'green.500',
+        color: 'white',
+    },
+};
+
 const Detail = () => {
-    const { id } = useParams();
-    const queryClient = useQueryClient();
     const [isEdit, setIsEdit] = useState();
     const [tabIndex, setTabIndex] = useState(0);
+    const [isUpload, setIsUpload] = useState(false);
+    const { id } = useParams();
+    const queryClient = useQueryClient();
 
     const { isFetching, data, refetch, error } = useQuery({
         queryKey: ['detail_destination', id],
@@ -124,34 +133,56 @@ const Detail = () => {
                                 {/* <Button className={`${classes.circleBtn} !text-white`} colorScheme='red'>
 									<MdFavoriteBorder />
 								</Button> */}
-                                <Button className={`${classes.circleBtn} !text-white`} bg='red.500' colorScheme='red' onClick={handleDeleteTrip}>
+                                <Button
+                                    className={`${classes.circleBtn} !text-white`}
+                                    isDisabled={tabIndex !== 3}
+                                    colorScheme='blue'
+                                    bg='blue.600'
+                                    onClick={() => setIsUpload(true)}>
+                                    <MdFileUpload />
+                                </Button>
+                                <Button
+                                    className={`${classes.circleBtn} !text-white`}
+                                    bg='red.500'
+                                    colorScheme='red'
+                                    onClick={handleDeleteTrip}>
                                     <MdDelete />
                                 </Button>
                             </div>
                             {data.image ? (
                                 <Image src={data.image} alt={data.name} className='h-full w-full object-cover' />
                             ) : (
-                                <Image
-                                    src='/images/no-image.png'
-                                    alt='no-image'
-                                    className='object-fit max-h-[160px] max-w-[auto]'
-                                />
+                                <Image src='/images/no-image.png' alt='no-image' className='object-fit max-h-[160px] max-w-[auto]' />
                             )}
                         </div>
                         <div className={classes.content}>
                             <div className='flex flex-wrap items-center justify-between mb-3 md:mb-10'>
                                 <h2 className={classes.title}>{data.name}</h2>
-                                <span>{moment(data.startDate).format('DD/MM/YYYY')}
-                                    {data.endDate && ` - ${moment(data.endDate).format('DD/MM/YYYY') }`}
+                                <span>
+                                    {moment(data.startDate).format('DD/MM/YYYY')}
+                                    {data.endDate && ` - ${moment(data.endDate).format('DD/MM/YYYY')}`}
                                 </span>
                                 {/* <p className='w-full mt-2'>Accomodation: {data?.place}</p> */}
                             </div>
-                            <Tabs isFitted onChange={handleTabChange} index={tabIndex}>
-                                <TabList overflowX="scroll" overflowY='hidden'>
-                                    <Tab>Accomodation</Tab>
-                                    <Tab>Destinations</Tab>
-                                    <Tab>Foods</Tab>
-                                    <Tab>Photos</Tab>
+                            <Tabs
+                                // variant='enclosed-colored'
+                                isFitted
+                                isLazy
+                                isManual
+                                onChange={handleTabChange}
+                                index={tabIndex}>
+                                <TabList
+                                    overflowY='hidden'
+                                    sx={{
+                                        scrollbarWidth: 'none',
+                                        '::-webkit-scrollbar': {
+                                            display: 'none',
+                                        },
+                                    }}>
+                                    <Tab sx={tabStyles}>Accomodation</Tab>
+                                    <Tab sx={tabStyles}>Destinations</Tab>
+                                    <Tab sx={tabStyles}>Foods</Tab>
+                                    <Tab sx={tabStyles}>Photos</Tab>
                                 </TabList>
 
                                 <TabPanels>
@@ -165,7 +196,14 @@ const Detail = () => {
                                         <Foods initData={data} />
                                     </TabPanel>
                                     <TabPanel>
-                                        <Photos name={data.name} activeTab={tabIndex} />
+                                        <Photos name={data.name} activeTab={tabIndex} refetchPhotos={refetch}>
+                                            <ImageUpload
+                                                name={data.name}
+                                                isUpload={isUpload}
+                                                closeUpload={() => setIsUpload(false)}
+                                                refetchPhotos={refetch}
+                                            />
+                                        </Photos>
                                     </TabPanel>
                                 </TabPanels>
                             </Tabs>

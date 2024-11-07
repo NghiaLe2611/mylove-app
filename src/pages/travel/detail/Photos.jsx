@@ -1,23 +1,69 @@
+import { deletePhoto } from '@/api/photoApi';
 import { getTripPhotos } from '@/api/travelApi';
-import { Button, HStack, Skeleton, Stack, useDisclosure } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
-import ImageUpload from './ImageUpload';
-import { useState } from 'react';
 import CustomModal from '@/components/modal';
+import { useConfirm } from '@/hooks/useConfirm';
+import useCustomToast from '@/hooks/useCustomToast';
+import { Button, HStack, Skeleton, Stack, useDisclosure } from '@chakra-ui/react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useRef, useState } from 'react';
 
-const Photos = ({ name, activeTab }) => {
+const Photos = ({ name, activeTab, refetchPhotos, children }) => {
     const [currentImage, setCurrentImage] = useState(null);
+
+    const imageRef = useRef(null);
+
     const { isFetching, data, refetch, error } = useQuery({
         queryKey: ['trip_photos', name],
         queryFn: () => getTripPhotos(name),
         enabled: activeTab === 3,
     });
+    const deleteMutation = useMutation({
+        mutationFn: (key) => deletePhoto(key),
+        onSuccess: (data) => {
+            showToast(data?.message || 'Success');
+            refetchPhotos();
+        },
+        onError: (error) => {
+            showToast(error.message || 'Upload failed', 'error');
+        },
+    });
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const showToast = useCustomToast();
+
+
+    const { openDialog: handleDeleteImage, ConfirmDialog } = useConfirm({
+        title: 'Delete image',
+        description: `Are you sure to delete this image ?`,
+        onConfirm: () => {
+            if (imageRef.current) {
+                deleteMutation.mutate(imageRef.current);
+            }
+        },
+    });
+
+    const { openDialog: handleDeleteAll, ConfirmDialog: DeleteAllDialog } = useConfirm({
+        title: 'Delete all images',
+        description: `Are you sure to delete this all images ?`,
+        onConfirm: () => {
+            if (imageRef.current) {
+                deleteMutation.mutate(imageRef.current);
+            }
+        },
+    });
 
     const handleShowImage = (item) => {
         setCurrentImage(item);
+        imageRef.current = item;
         onOpen();
-    }
+    };
+
+    const handleCloseImage = () => {
+        setCurrentImage(null);
+        imageRef.current = null;
+        onClose();
+    };
+
+
 
     if (isFetching) {
         return (
@@ -31,7 +77,7 @@ const Photos = ({ name, activeTab }) => {
 
     return (
         <div>
-            <ImageUpload name={name} refetchPhotos={refetch} />
+            {children}
 
             {data?.data.length > 0 ? (
                 <>
@@ -47,18 +93,21 @@ const Photos = ({ name, activeTab }) => {
                 <div className='text-center text-lg my-5'>Photos is now empty.</div>
             )}
 
-            <CustomModal title={currentImage} isOpen={isOpen} onClose={onClose}>
-                <div className='mb-2'>
-                    {
-                        currentImage && <img src={`${import.meta.env.VITE_TEBI_URL}/${currentImage}`} alt={currentImage} />
-                    }
+            <CustomModal title={currentImage} isOpen={isOpen} onClose={handleCloseImage}>
+                <div className='mb-4'>
+                    {currentImage && <img src={`${import.meta.env.VITE_TEBI_URL}/${currentImage}`} alt={currentImage} />}
                 </div>
                 <HStack spacing={2} justifyContent='center'>
-                    <Button colorScheme='red'>Delete</Button>
-                    <Button bg='gray.400' onClick={onClose} className='!text-white'>Cancel</Button>
+                    <Button colorScheme='red' onClick={handleDeleteImage}>
+                        Delete
+                    </Button>
+                    <Button bg='gray.400' onClick={handleCloseImage} className='!text-white'>
+                        Cancel
+                    </Button>
                 </HStack>
             </CustomModal>
 
+            <ConfirmDialog key={currentImage} />
         </div>
     );
 };

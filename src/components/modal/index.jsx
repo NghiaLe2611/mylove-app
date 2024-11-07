@@ -21,7 +21,7 @@ const CustomModal = (props) => {
                         <MdClose className='text-xl' />
                     </Button>
                 </ModalHeader>
-                <ModalBody className='p-4 !pb-10 text-sm'>
+                <ModalBody className='p-4 !pb-8 text-sm'>
                     {props.children}
                 </ModalBody>
                 {/* <ModalFooter>

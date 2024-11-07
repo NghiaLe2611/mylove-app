@@ -22,15 +22,15 @@ export const useConfirm = ({
 	const cancelRef = React.useRef();
 
 	const handleConfirm = useCallback(() => {
-		onConfirm();
+        onConfirm();
 		onClose();
 	}, []);
 
 	const ConfirmDialog = useCallback(() => {
 		return (
-			<AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
+			<AlertDialog isOpen={isOpen} isCentered leastDestructiveRef={cancelRef} onClose={onClose}>
 				<AlertDialogOverlay>
-					<AlertDialogContent>
+					<AlertDialogContent className='!max-w-[90vw] md:!max-w-[500px]'>
 						{title && (
 							<AlertDialogHeader fontSize='lg' fontWeight='bold'>
 								{title}

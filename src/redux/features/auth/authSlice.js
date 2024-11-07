@@ -4,8 +4,10 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState: {
         isLoggedIn: false,
+        isLogging: false,
         email: null,
         username: null,
+        error: null,
         // token: null,
     },
     reducers: {
@@ -14,18 +16,23 @@ export const authSlice = createSlice({
         },
         loginSuccess: (state, action) => {
             state.isLoggedIn = true;
-            state.error = false;
             state.email = action.payload.email;
             state.username = action.payload.username;
+            // state.error = false;
             // state.token = action.payload.access_token;
+        },
+        currentlyLogin: (state, action) => {
+            state.isLogging = true;
         },
         loginFailed: (state) => {
             state.isLoggedIn = false;
+            state.isLogging = false;
         },
         logoutSuccess: (state) => {
             state.isLoggedIn = false;
             state.email = null;
             state.username = null;
+            state.isLogging = false;
             // state.token = null;
         },
         logoutFailed: (state) => {

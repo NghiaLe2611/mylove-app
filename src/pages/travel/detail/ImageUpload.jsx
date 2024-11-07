@@ -1,38 +1,16 @@
-import axiosClient from '@/axios/axiosClient';
+import { uploadPhotos } from '@/api/photoApi';
 import useCustomToast from '@/hooks/useCustomToast';
 import { getDirectoryPhotoPath } from '@/utils';
 import { Button, HStack } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
-import classNames from 'classnames';
 import { useState } from 'react';
-import { MdFileUpload } from 'react-icons/md';
 
 const MAX_SIZE = 8;
 
-const uploadPhotos = async ({ files, directory, onProgress }) => {
-    const formData = new FormData();
-
-    files.forEach((file) => {
-        formData.append('files', file);
-    });
-    formData.append('directory', directory);
-    const response = await axiosClient.post('/api/photo/upload', formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        },
-        onUploadProgress: (progressEvent) => {
-            const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-            onProgress(progress);
-        },
-    });
-
-    return response.data;
-};
-
-const ImageUpload = ({ name, refetchPhotos }) => {
+const ImageUpload = ({ name, isUpload, closeUpload, refetchPhotos }) => {
     const [files, setFiles] = useState([]);
     const [uploadProgress, setUploadProgress] = useState(0);
-    const [isUpload, setIsUpload] = useState(false);
+    // const [isUpload, setIsUpload] = useState(false);
 
     const showToast = useCustomToast();
 
@@ -44,7 +22,6 @@ const ImageUpload = ({ name, refetchPhotos }) => {
                 onProgress: setUploadProgress
             }),
         onSuccess: (data) => {
-            console.log(123, data);
             setFiles([]);
             setUploadProgress(0);
             refetchPhotos();
@@ -84,15 +61,6 @@ const ImageUpload = ({ name, refetchPhotos }) => {
     return (
         <div className='text-center'>
             <div className='mb-4'>
-                <Button
-                    leftIcon={<MdFileUpload />}
-                    colorScheme='green'
-                    onClick={() => setIsUpload(true)}
-                    className={classNames({
-                        '!hidden': isUpload
-                    })}>
-                    Upload
-                </Button>
                 {isUpload && (
                     <>
                         <div className='flex items-center justify-center w-full my-3'>
@@ -146,7 +114,7 @@ const ImageUpload = ({ name, refetchPhotos }) => {
                             <Button colorScheme='green' onClick={handleUploadPhoto} disabled={files.length === 0}>
                                 Upload
                             </Button>
-                            <Button onClick={() => setIsUpload(false)}>Cancel</Button>
+                            <Button onClick={closeUpload}>Cancel</Button>
                         </HStack>
                     </>
                 )}
