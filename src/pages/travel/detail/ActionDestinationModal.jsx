@@ -1,24 +1,13 @@
 import { editTrip } from '@/api/travelApi';
-import classes from '@/assets/styles/modal.module.scss';
 import FormError from '@/components/form/FormError';
+import CustomModal from '@/components/modal';
 import useCustomToast from '@/hooks/useCustomToast';
-import {
-    Button,
-    FormControl,
-    Input,
-    Modal,
-    ModalBody,
-    ModalContent,
-    ModalHeader,
-    ModalOverlay,
-    Textarea
-} from '@chakra-ui/react';
+import { Button, FormControl, Input, Textarea } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import moment from 'moment';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { MdClose } from 'react-icons/md';
 import * as yup from 'yup';
 
 const addSchema = yup.object({
@@ -107,159 +96,141 @@ const ActionDestinationModal = ({ isOpen, onClose, refetchItems, editData, isEdi
                 id: editData._id,
                 data: {
                     destination: data,
-                    action: 'add'
+                    action: 'add',
                 },
             });
         }
     };
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} className='items-center' isCentered>
-            <ModalOverlay />
-            <ModalContent className={classes.modal}>
-                <ModalHeader className={classes.header}>
-                    <h3>{isEdit ? 'Edit trip' : 'Add new destination'}</h3>
-                    <Button variant='text' className='!p-0' onClick={onClose}>
-                        <MdClose className='text-xl' />
+        <CustomModal title={isEdit ? 'Edit trip' : 'Add new destination'} isOpen={isOpen} onClose={onClose}>
+            {isEdit ? (
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className='mb-10'>
+                        <FormControl className='my-2'>
+                            <Input
+                                name='name'
+                                className='!text-sm'
+                                isInvalid={Boolean(errors['name'])}
+                                errorBorderColor='red.500'
+                                {...register('name')}
+                                placeholder={`Destination`}
+                            />
+                            <FormError message={errors['name']?.message} />
+                        </FormControl>
+                        <FormControl className='my-2'>
+                            <Input
+                                name='startDate'
+                                className='!text-sm'
+                                isInvalid={Boolean(errors['startDate'])}
+                                errorBorderColor='red.500'
+                                placeholder='Start date'
+                                type='date'
+                                {...register('startDate')}
+                            />
+                            <FormError message={errors['date']?.message} />
+                        </FormControl>
+                        <FormControl className='my-2'>
+                            <Input
+                                name='endDate'
+                                className='!text-sm'
+                                errorBorderColor='red.500'
+                                placeholder='End date'
+                                type='date'
+                                {...register('endDate')}
+                            />
+                        </FormControl>
+                        <FormControl className='my-2'>
+                            <Input
+                                name='images'
+                                className='!text-sm'
+                                isInvalid={Boolean(errors['images'])}
+                                errorBorderColor='red.500'
+                                placeholder='Image url'
+                                {...register('images')}
+                            />
+                        </FormControl>
+                    </div>
+                    <Button type='submit' className='w-full !bg-primary !text-white !text-base' disabled={mutation.isLoading}>
+                        Edit
                     </Button>
-                </ModalHeader>
-                <ModalBody className='p-4 !pb-10 text-sm'>
-                    {isEdit ? (
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <div className='mb-10'>
-                                <FormControl className='my-2'>
-                                    <Input
-                                        name='name'
-                                        className='!text-sm'
-                                        isInvalid={Boolean(errors['name'])}
-                                        errorBorderColor='red.500'
-                                        {...register('name')}
-                                        placeholder={`Destination`}
-                                    />
-                                    <FormError message={errors['name']?.message} />
-                                </FormControl>
-                                <FormControl className='my-2'>
-                                    <Input
-                                        name='startDate'
-                                        className='!text-sm'
-                                        isInvalid={Boolean(errors['startDate'])}
-                                        errorBorderColor='red.500'
-                                        placeholder='Start date'
-                                        type='date'
-                                        {...register('startDate')}
-                                    />
-                                    <FormError message={errors['date']?.message} />
-                                </FormControl>
-                                <FormControl className='my-2'>
-                                    <Input
-                                        name='endDate'
-                                        className='!text-sm'
-                                        errorBorderColor='red.500'
-                                        placeholder='End date'
-                                        type='date'
-                                        {...register('endDate')}
-                                    />
-                                </FormControl>
-                                <FormControl className='my-2'>
-                                    <Input
-                                        name='images'
-                                        className='!text-sm'
-                                        isInvalid={Boolean(errors['images'])}
-                                        errorBorderColor='red.500'
-                                        placeholder='Image url'
-                                        {...register('images')}
-                                    />
-                                </FormControl>
-                            </div>
-                            <Button type='submit' className='w-full !bg-primary !text-white !text-base' disabled={mutation.isLoading}>
-                                Edit
-                            </Button>
-                        </form>
-                    ) : (
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <div className='mb-10'>
-                                <FormControl className='my-2'>
-                                    <Input
-                                        name='name'
-                                        className='!text-sm'
-                                        isInvalid={Boolean(errors['name'])}
-                                        errorBorderColor='red.500'
-                                        {...register('name')}
-                                        placeholder={`Destination`}
-                                    />
-                                    <FormError message={errors['name']?.message} />
-                                </FormControl>
-                                <FormControl className='my-2'>
-                                    <Input
-                                        name='date'
-                                        className='!text-sm'
-                                        isInvalid={Boolean(errors['date'])}
-                                        errorBorderColor='red.500'
-                                        placeholder='Date'
-                                        type='date'
-                                        {...register('date')}
-                                    />
-                                    <FormError message={errors['date']?.message} />
-                                </FormControl>
-                                <FormControl className='my-2'>
-                                    <Input
-                                        name='time'
-                                        className='!text-sm'
-                                        isInvalid={Boolean(errors['time'])}
-                                        errorBorderColor='red.500'
-                                        placeholder='Start time'
-                                        type='time'
-                                        {...register('time')}
-                                    />
-                                    <FormError message={errors['time']?.message} />
-                                </FormControl>
-                                <FormControl className='my-2'>
-                                    <Textarea
-                                        name='description'
-                                        className='!text-sm'
-                                        isInvalid={Boolean(errors['description'])}
-                                        errorBorderColor='red.500'
-                                        placeholder='Description'
-                                        {...register('description')}
-                                    />
-                                    <FormError message={errors['description']?.message} />
-                                </FormControl>
-                                <FormControl className='my-2'>
-                                    <Input
-                                        name='images'
-                                        className='!text-sm'
-                                        isInvalid={Boolean(errors['images'])}
-                                        errorBorderColor='red.500'
-                                        placeholder='Image'
-                                        {...register('images')}
-                                    />
-                                </FormControl>
-                                <FormControl className='my-2'>
-                                    <Input
-                                        name='map_url'
-                                        className='!text-sm'
-                                        isInvalid={Boolean(errors['map_url'])}
-                                        errorBorderColor='red.500'
-                                        placeholder='Map url'
-                                        {...register('map_url')}
-                                    />
-                                </FormControl>
-                            </div>
-                            <Button type='submit' className='w-full !bg-primary !text-white !text-base' disabled={mutation.isLoading}>
-                                Add
-                            </Button>
-                        </form>
-                    )}
-                </ModalBody>
-
-                {/* <ModalFooter>
-					<Button colorScheme='blue' mr={3} onClick={onClose}>
-						Close
-					</Button>
-					<Button variant='ghost'>Secondary Action</Button>
-				</ModalFooter> */}
-            </ModalContent>
-        </Modal>
+                </form>
+            ) : (
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className='mb-10'>
+                        <FormControl className='my-2'>
+                            <Input
+                                name='name'
+                                className='!text-sm'
+                                isInvalid={Boolean(errors['name'])}
+                                errorBorderColor='red.500'
+                                {...register('name')}
+                                placeholder={`Destination`}
+                            />
+                            <FormError message={errors['name']?.message} />
+                        </FormControl>
+                        <FormControl className='my-2'>
+                            <Input
+                                name='date'
+                                className='!text-sm'
+                                isInvalid={Boolean(errors['date'])}
+                                errorBorderColor='red.500'
+                                placeholder='Date'
+                                type='date'
+                                {...register('date')}
+                            />
+                            <FormError message={errors['date']?.message} />
+                        </FormControl>
+                        <FormControl className='my-2'>
+                            <Input
+                                name='time'
+                                className='!text-sm'
+                                isInvalid={Boolean(errors['time'])}
+                                errorBorderColor='red.500'
+                                placeholder='Start time'
+                                type='time'
+                                {...register('time')}
+                            />
+                            <FormError message={errors['time']?.message} />
+                        </FormControl>
+                        <FormControl className='my-2'>
+                            <Textarea
+                                name='description'
+                                className='!text-sm'
+                                isInvalid={Boolean(errors['description'])}
+                                errorBorderColor='red.500'
+                                placeholder='Description'
+                                {...register('description')}
+                            />
+                            <FormError message={errors['description']?.message} />
+                        </FormControl>
+                        <FormControl className='my-2'>
+                            <Input
+                                name='images'
+                                className='!text-sm'
+                                isInvalid={Boolean(errors['images'])}
+                                errorBorderColor='red.500'
+                                placeholder='Image'
+                                {...register('images')}
+                            />
+                        </FormControl>
+                        <FormControl className='my-2'>
+                            <Input
+                                name='map_url'
+                                className='!text-sm'
+                                isInvalid={Boolean(errors['map_url'])}
+                                errorBorderColor='red.500'
+                                placeholder='Map url'
+                                {...register('map_url')}
+                            />
+                        </FormControl>
+                    </div>
+                    <Button type='submit' className='w-full !bg-primary !text-white !text-base' disabled={mutation.isLoading}>
+                        Add
+                    </Button>
+                </form>
+            )}
+        </CustomModal>
     );
 };
 
