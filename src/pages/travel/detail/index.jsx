@@ -14,6 +14,7 @@ import ActionDestinationModal from './ActionDestinationModal';
 import Foods from './Foods';
 import Items from './Items';
 import classes from './detail.module.scss';
+import Photos from './Photos';
 const style = `<style>.header {display: none;}</style>`;
 
 const Detail = () => {
@@ -105,25 +106,25 @@ const Detail = () => {
             <div className='relative h-full'>
                 {data ? (
                     <>
-                        <div className={classes.img}>
+                        <div className={`${classes.img} flex items-center justify-center`}>
                             <span
                                 className={classes.backBtn}
                                 onClick={() => {
                                     navigate(-1);
                                 }}>
-                                <IoIosArrowBack className='text-sm' />
+                                <IoIosArrowBack className='text-xl' />
                             </span>
                             <div className={classes.wrapBtn}>
-                                <Button className={classes.circleBtn} onClick={onOpen} colorScheme='green'>
+                                <Button className={classes.circleBtn} onClick={onOpen} colorScheme='green' bg='green.500'>
                                     <MdAdd />
                                 </Button>
-                                <Button className={classes.circleBtn} onClick={handleEdit}>
+                                <Button className={classes.circleBtn} onClick={handleEdit} colorScheme='blue' bg='blue.500'>
                                     <MdEdit />
                                 </Button>
                                 {/* <Button className={`${classes.circleBtn} !text-white`} colorScheme='red'>
 									<MdFavoriteBorder />
 								</Button> */}
-                                <Button className={`${classes.circleBtn} !text-white`} colorScheme='red' onClick={handleDeleteTrip}>
+                                <Button className={`${classes.circleBtn} !text-white`} bg='red.500' colorScheme='red' onClick={handleDeleteTrip}>
                                     <MdDelete />
                                 </Button>
                             </div>
@@ -131,23 +132,26 @@ const Detail = () => {
                                 <Image src={data.image} alt={data.name} className='h-full w-full object-cover' />
                             ) : (
                                 <Image
-                                    src='https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg'
+                                    src='/images/no-image.png'
                                     alt='no-image'
-                                    className='h-full w-full object-cover'
+                                    className='object-fit max-h-[160px] max-w-[auto]'
                                 />
                             )}
                         </div>
                         <div className={classes.content}>
                             <div className='flex flex-wrap items-center justify-between mb-3 md:mb-10'>
                                 <h2 className={classes.title}>{data.name}</h2>
-                                <span>{moment(data.time).format('DD/MM/YYYY')}</span>
+                                <span>{moment(data.startDate).format('DD/MM/YYYY')}
+                                    {data.endDate && ` - ${moment(data.endDate).format('DD/MM/YYYY') }`}
+                                </span>
                                 {/* <p className='w-full mt-2'>Accomodation: {data?.place}</p> */}
                             </div>
                             <Tabs isFitted onChange={handleTabChange} index={tabIndex}>
-                                <TabList>
+                                <TabList overflowX="scroll" overflowY='hidden'>
                                     <Tab>Accomodation</Tab>
                                     <Tab>Destinations</Tab>
                                     <Tab>Foods</Tab>
+                                    <Tab>Photos</Tab>
                                 </TabList>
 
                                 <TabPanels>
@@ -159,6 +163,9 @@ const Detail = () => {
                                     </TabPanel>
                                     <TabPanel>
                                         <Foods initData={data} />
+                                    </TabPanel>
+                                    <TabPanel>
+                                        <Photos name={data.name} activeTab={tabIndex} />
                                     </TabPanel>
                                 </TabPanels>
                             </Tabs>

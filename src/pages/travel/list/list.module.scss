@@ -6,9 +6,9 @@
     @apply h-[300px] md:h-[400px] w-full pb-10;
 
     .item {
-        @apply relative max-w-[150px] md:max-w-[200px];
+        @apply relative max-w-[150px] md:max-w-[200px] rounded-2xl border border-gray-300;
         img{
-            object-fit: cover;
+            // object-fit: cover;
             @apply h-full w-full;
         }
     }
@@ -22,6 +22,6 @@
 }
 
 .time {
-    @apply absolute bottom-2 right-2 rounded-sm text-white text-sm p-2 leading-none;
+    @apply absolute bottom-2 right-2 rounded-sm text-white text-sm p-2 text-right;
     background-color: rgba(0, 0, 0, 0.4);
 }

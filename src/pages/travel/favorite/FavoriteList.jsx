@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import classes from '@/assets/styles/list.module.scss';
+import classes from '../list/list.module.scss';
 import { Pagination } from 'swiper/modules';
 import { Image } from '@chakra-ui/react';
 import moment from 'moment';

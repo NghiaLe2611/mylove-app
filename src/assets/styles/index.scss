@@ -3,7 +3,7 @@
 @tailwind utilities;
 @import './mixins';
 
-#root{
+#root {
     @apply w-full rounded-lg md:rounded-none;
     @apply overflow-y-hidden md:overflow-y-auto m-2 md:m-0;
     background-color: var(--bg);
@@ -13,7 +13,7 @@
 }
 
 :root {
-	--primary: #189074; // #48914b
+    --primary: #189074; // #48914b
     --primary-01: #1aa081;
     --primary-02: #187963;
     --text-common: #535353;
@@ -24,6 +24,8 @@
 
 .chakra-ui-dark {
     --primary: #2db064;
+    --primary-01: #1aa081;
+    --primary-02: #187963;
     --text-common: #f1f1f1;
     --input: #282828;
     --bg: #202320;
@@ -39,36 +41,37 @@ body {
     --swiper-pagination-bullet-inactive-color: var(--text-common) !important;
 }
 
-html,body{
+html,
+body {
     // max-height: 100vh;
     // min-height: auto;
     height: 100%;
 }
 
 // main{
-    // max-height: calc(100vh - 120px);
+// max-height: calc(100vh - 120px);
 // }
 
-a{
+a {
     text-decoration: none;
     outline: none;
 }
 
-.home{
+.home {
     @apply flex items-center justify-center;
     @apply md:block;
 }
 
-.wrap-content{
+.wrap-content {
     @apply h-full w-full px-4 md:px-0 py-5 overflow-y-auto;
     @apply md:h-auto;
 }
 
-.background{
+.background {
     @apply bg-[url('/images/light-pattern.png')];
 }
 
-.chakra-ui-dark .background{
+.chakra-ui-dark .background {
     @apply bg-[url('/images/dark-pattern.png')];
 }
 
@@ -84,7 +87,7 @@ a{
     height: 6px;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb:horizontal{
+.custom-scrollbar::-webkit-scrollbar-thumb:horizontal {
     background: #929292;
     border-radius: 10px;
 }
@@ -102,7 +105,7 @@ a{
 }
 
 // Slider
-.travel-list .swiper-pagination{
+.travel-list .swiper-pagination {
     bottom: -45px;
 }
 
@@ -110,7 +113,8 @@ a{
     #root {
         height: auto;
     }
-    main{
+
+    main {
         max-height: initial;
     }
 }
