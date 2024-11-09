@@ -37,5 +37,18 @@ const deletePhoto = async (key) => {
     }
 };
 
+const deleteAllPhotos = async (keys) => {
+    try {
+        const response = await axiosClient.delete(`/api/photo/deleteAll`, {
+            data: {
+                keys
+            }
+        });
+        return response.data;
+    } catch (err) {
+        return null;
+    }
+};
 
-export { uploadPhotos, deletePhoto }
+
+export { uploadPhotos, deletePhoto, deleteAllPhotos }

@@ -5,7 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import List from './list/List';
 import AddModal from './create';
 import { useDisclosure } from '@chakra-ui/react';
-import FavoriteList from './favorite/FavoriteList';
+import { IoMdAdd } from 'react-icons/io';
+// import FavoriteList from './favorite/FavoriteList';
 
 const TravelApp = () => {
 	const { isLoading, refetch, data } = useQuery({
@@ -61,7 +62,7 @@ const TravelApp = () => {
 				<div className='flex-1 flex items-center justify-center'>No destination now. Please add one !</div>
 			)}
 
-			<Fab handleClick={onOpen} />
+            <Fab handleClick={onOpen} icon={<IoMdAdd/> } />
 			<AddModal isOpen={isOpen} onClose={onClose} refetchItems={refetch} />
 		</div>
 	);

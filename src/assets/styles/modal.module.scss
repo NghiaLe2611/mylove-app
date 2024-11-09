@@ -1,5 +1,5 @@
 .modal{
-    @apply bg-background w-[90%];
+    @apply bg-background max-w-[90vw] max-h-[90vh];
 }
 
 .header{

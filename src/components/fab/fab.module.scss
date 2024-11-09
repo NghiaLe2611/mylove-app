@@ -1,7 +1,7 @@
 .button {
     @apply rounded-full w-10 h-10 p-0 #{!important};
-    @apply md:w-20 md:h-20 #{!important};
+    @apply md:w-14 md:h-14 xl:w-20 xl:h-20 #{!important};
     svg {
-        @apply text-lg text-white md:text-3xl;
+        @apply text-lg text-white md:text-xl xl:text-3xl;
     }
 }

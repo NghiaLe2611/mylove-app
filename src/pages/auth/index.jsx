@@ -43,8 +43,6 @@ const AuthPage = () => {
     if (isLoggedIn) {
         return <Navigate to='/' />;
     }
-
-    console.log(123, isLogging);
     
     return (
         <div className={`${classes.container} background`}>
