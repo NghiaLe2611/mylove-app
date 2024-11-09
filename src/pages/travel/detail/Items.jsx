@@ -178,7 +178,7 @@ const Items = ({ data, id, refetch }) => {
 		);
 	}
 
-	return <p>There is no destination now.</p>;
+	return <p>There is no destination now. Please add one.</p>;
 
 	// Show as slide
 	// return data ? (

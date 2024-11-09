@@ -2,12 +2,12 @@ import { deleteTrip, getDetailTrip } from '@/api/travelApi';
 import Loader from '@/components/loader';
 import { useConfirm } from '@/hooks/useConfirm';
 import useCustomToast from '@/hooks/useCustomToast';
-import { Button, Image, Tab, TabList, TabPanel, TabPanels, Tabs, useDisclosure } from '@chakra-ui/react';
+import { Button, createStylesContext, Image, Tab, TabList, TabPanel, TabPanels, Tabs, useDisclosure } from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import moment from 'moment';
 import { useCallback, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
-import { MdAdd, MdDelete, MdEdit } from 'react-icons/md';
+import { MdAdd, MdDelete, MdEdit, MdFileUpload } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router-dom';
 import Accomodation from './Accomodation';
 import ActionDestinationModal from './ActionDestinationModal';
@@ -15,181 +15,225 @@ import Foods from './Foods';
 import Items from './Items';
 import classes from './detail.module.scss';
 import Photos from './Photos';
+import ImageUpload from './ImageUpload';
 const style = `<style>.header {display: none;}</style>`;
 
+const tabStyles = {
+	_selected: {
+		bg: 'green.500',
+		color: 'white',
+	},
+};
+
 const Detail = () => {
-    const { id } = useParams();
-    const queryClient = useQueryClient();
-    const [isEdit, setIsEdit] = useState();
-    const [tabIndex, setTabIndex] = useState(0);
+	const [isEdit, setIsEdit] = useState();
+	const [tabIndex, setTabIndex] = useState(0);
+	const [isUpload, setIsUpload] = useState(false);
+	const { id } = useParams();
+	const queryClient = useQueryClient();
 
-    const { isFetching, data, refetch, error } = useQuery({
-        queryKey: ['detail_destination', id],
-        queryFn: () => getDetailTrip(id),
-        staleTime: 60 * 1000,
-        refetchOnWindowFocus: false,
-        enabled: id ? true : false,
-    });
-    const showToast = useCustomToast();
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const navigate = useNavigate();
-    const mutation = useMutation({
-        mutationFn: deleteTrip,
-        onSuccess: (data) => {
-            const { message } = data;
-            showToast(message, null, 'bottom');
-            queryClient.invalidateQueries(['list_destination']);
-            navigate(-1);
-        },
-        onError: (error, variables, context) => {
-            const errMsg = error.response?.data?.message || error.message;
-            alert(errMsg);
-            showToast(errMsg, 'error', 'bottom');
-        },
-    });
+	const { isFetching, data, refetch, error } = useQuery({
+		queryKey: ['detail_destination', id],
+		queryFn: () => getDetailTrip(id),
+		staleTime: 60 * 1000,
+		refetchOnWindowFocus: false,
+		enabled: id ? true : false,
+	});
+	const showToast = useCustomToast();
+	const { isOpen, onOpen, onClose } = useDisclosure();
+	const navigate = useNavigate();
+	const mutation = useMutation({
+		mutationFn: deleteTrip,
+		onSuccess: (data) => {
+			const { message } = data;
+			showToast(message, null, 'bottom');
+			queryClient.invalidateQueries(['list_destination']);
+			navigate(-1);
+		},
+		onError: (error, variables, context) => {
+			const errMsg = error.response?.data?.message || error.message;
+			alert(errMsg);
+			showToast(errMsg, 'error', 'bottom');
+		},
+	});
 
-    const { openDialog, ConfirmDialog } = useConfirm({
-        title: 'Delete trip',
-        description: `Are you sure to delete this trip ?`,
-        onConfirm: () => {
-            mutation.mutate(id);
-        },
-    });
+	const { openDialog, ConfirmDialog } = useConfirm({
+		title: 'Delete trip',
+		description: `Are you sure to delete this trip ?`,
+		onConfirm: () => {
+			mutation.mutate(id);
+		},
+	});
 
-    const handleEdit = () => {
-        onOpen();
-        setIsEdit(true);
-    };
+	const handleEdit = () => {
+		onOpen();
+		setIsEdit(true);
+	};
 
-    const handleClose = () => {
-        onClose();
-        setIsEdit(false);
-    };
+	const handleClose = () => {
+		onClose();
+		setIsEdit(false);
+	};
 
-    const handleRefetch = useCallback(() => {
-        refetch();
-    }, []);
+	const handleRefetch = useCallback(() => {
+		refetch();
+	}, []);
 
-    if (isFetching) {
-        return <Loader />;
-    }
+	if (isFetching) {
+		return <Loader />;
+	}
 
-    if (error) {
-        const errMsg = error.response?.data?.message || error.message;
-        return (
-            <div className='p-4'>
-                <p className='text-center mb-2'>{errMsg}</p>
-                <Button
-                    className='!flex !mx-auto'
-                    colorScheme='primary'
-                    onClick={() => {
-                        navigate('/travel');
-                    }}>
-                    Back to list
-                </Button>
-            </div>
-        );
-    }
+	if (error) {
+		const errMsg = error.response?.data?.message || error.message;
+		return (
+			<div className='p-4'>
+				<p className='text-center mb-2'>{errMsg}</p>
+				<Button
+					className='!flex !mx-auto'
+					colorScheme='primary'
+					onClick={() => {
+						navigate('/travel');
+					}}>
+					Back to list
+				</Button>
+			</div>
+		);
+	}
 
-    const handleTabChange = (index) => {
-        setTabIndex(index);
-    };
+	const handleTabChange = (index) => {
+		setTabIndex(index);
+	};
 
-    const handleDeleteTrip = (item) => {
-        openDialog();
-    };
+	const handleDeleteTrip = (item) => {
+		openDialog();
+	};
 
-    return (
-        <div className={classes.detail}>
-            <div dangerouslySetInnerHTML={{ __html: style }} />
+	return (
+		<div className={classes.detail}>
+			<div dangerouslySetInnerHTML={{ __html: style }} />
 
-            <div className='relative h-full'>
-                {data ? (
-                    <>
-                        <div className={`${classes.img} flex items-center justify-center`}>
-                            <span
-                                className={classes.backBtn}
-                                onClick={() => {
-                                    navigate(-1);
-                                }}>
-                                <IoIosArrowBack className='text-xl' />
-                            </span>
-                            <div className={classes.wrapBtn}>
-                                <Button className={classes.circleBtn} onClick={onOpen} colorScheme='green' bg='green.500'>
-                                    <MdAdd />
-                                </Button>
-                                <Button className={classes.circleBtn} onClick={handleEdit} colorScheme='blue' bg='blue.500'>
-                                    <MdEdit />
-                                </Button>
-                                {/* <Button className={`${classes.circleBtn} !text-white`} colorScheme='red'>
+			<div className='relative h-full'>
+				{data ? (
+					<>
+						<div className={`${classes.img} flex items-center justify-center`}>
+							<span
+								className={classes.backBtn}
+								onClick={() => {
+									navigate(-1);
+								}}>
+								<IoIosArrowBack className='text-xl' />
+							</span>
+							<div className={classes.wrapBtn}>
+								<Button className={classes.circleBtn} onClick={onOpen} colorScheme='green' bg='green.500'>
+									<MdAdd />
+								</Button>
+								<Button className={classes.circleBtn} onClick={handleEdit} colorScheme='blue' bg='blue.500'>
+									<MdEdit />
+								</Button>
+								{/* <Button className={`${classes.circleBtn} !text-white`} colorScheme='red'>
 									<MdFavoriteBorder />
 								</Button> */}
-                                <Button className={`${classes.circleBtn} !text-white`} bg='red.500' colorScheme='red' onClick={handleDeleteTrip}>
-                                    <MdDelete />
-                                </Button>
-                            </div>
-                            {data.image ? (
-                                <Image src={data.image} alt={data.name} className='h-full w-full object-cover' />
-                            ) : (
-                                <Image
-                                    src='/images/no-image.png'
-                                    alt='no-image'
-                                    className='object-fit max-h-[160px] max-w-[auto]'
-                                />
-                            )}
-                        </div>
-                        <div className={classes.content}>
-                            <div className='flex flex-wrap items-center justify-between mb-3 md:mb-10'>
-                                <h2 className={classes.title}>{data.name}</h2>
-                                <span>{moment(data.startDate).format('DD/MM/YYYY')}
-                                    {data.endDate && ` - ${moment(data.endDate).format('DD/MM/YYYY') }`}
-                                </span>
-                                {/* <p className='w-full mt-2'>Accomodation: {data?.place}</p> */}
-                            </div>
-                            <Tabs isFitted onChange={handleTabChange} index={tabIndex}>
-                                <TabList overflowX="scroll" overflowY='hidden'>
-                                    <Tab>Accomodation</Tab>
-                                    <Tab>Destinations</Tab>
-                                    <Tab>Foods</Tab>
-                                    <Tab>Photos</Tab>
-                                </TabList>
+								<Button
+									className={`${classes.circleBtn} !text-white`}
+									isDisabled={tabIndex !== 3}
+									colorScheme='blue'
+									bg='blue.600'
+									onClick={() => setIsUpload(true)}>
+									<MdFileUpload />
+								</Button>
+								<Button
+									className={`${classes.circleBtn} !text-white`}
+									bg='red.500'
+									colorScheme='red'
+									onClick={handleDeleteTrip}>
+									<MdDelete />
+								</Button>
+							</div>
+							{data.image ? (
+								<Image src={data.image} alt={data.name} className='h-full w-full object-cover' />
+							) : (
+								<Image src='/images/no-image.png' alt='no-image' className='object-fit max-h-[160px] max-w-[auto]' />
+							)}
+						</div>
+						<div className={classes.content}>
+							<div className='flex flex-wrap items-center justify-between mb-3 md:mb-10'>
+								<h2 className={classes.title}>{data.name}</h2>
+								<span>
+									{moment(data.startDate).format('DD/MM/YYYY')}
+									{data.endDate && ` - ${moment(data.endDate).format('DD/MM/YYYY')}`}
+								</span>
+								{/* <p className='w-full mt-2'>Accomodation: {data?.place}</p> */}
+							</div>
+							<Tabs
+								// variant='enclosed-colored'
+								isFitted
+								isLazy
+								isManual
+								onChange={handleTabChange}
+								index={tabIndex}>
+								<TabList
+									overflowY='hidden'
+									sx={{
+										scrollbarWidth: 'none',
+										'::-webkit-scrollbar': {
+											display: 'none',
+										},
+									}}>
+									<Tab sx={tabStyles}>Accomodation</Tab>
+									<Tab sx={tabStyles}>Destinations</Tab>
+									<Tab sx={tabStyles}>Foods</Tab>
+									<Tab sx={tabStyles}>Photos</Tab>
+								</TabList>
 
-                                <TabPanels>
-                                    <TabPanel>
-                                        <Accomodation initData={data} />
-                                    </TabPanel>
-                                    <TabPanel>
-                                        <Items data={data.destination} id={data._id} refetch={handleRefetch} />
-                                    </TabPanel>
-                                    <TabPanel>
-                                        <Foods initData={data} />
-                                    </TabPanel>
-                                    <TabPanel>
-                                        <Photos name={data.name} activeTab={tabIndex} />
-                                    </TabPanel>
-                                </TabPanels>
-                            </Tabs>
-                        </div>
-                    </>
-                ) : (
-                    <div className='p-4'>
-                        <p className='text-center mb-2'>Trip not found.</p>
-                        <Button
-                            className='!flex !mx-auto'
-                            colorScheme='primary'
-                            onClick={() => {
-                                navigate('/travel');
-                            }}>
-                            Back to list
-                        </Button>
-                    </div>
-                )}
-            </div>
+								<TabPanels>
+									<TabPanel>
+										<Accomodation initData={data} />
+									</TabPanel>
+									<TabPanel>
+										<Items data={data.destination} id={data._id} refetch={handleRefetch} />
+									</TabPanel>
+									<TabPanel>
+										<Foods initData={data} />
+									</TabPanel>
+									<TabPanel>
+										<Photos name={data.name} activeTab={tabIndex}>
+											<ImageUpload name={data.name} isUpload={isUpload} closeUpload={() => setIsUpload(false)} />
+										</Photos>
+									</TabPanel>
+								</TabPanels>
+							</Tabs>
+						</div>
+					</>
+				) : (
+					<div className='p-4'>
+						<p className='text-center mb-2'>Trip not found.</p>
+						<Button
+							className='!flex !mx-auto'
+							colorScheme='primary'
+							onClick={() => {
+								navigate('/travel');
+							}}>
+							Back to list
+						</Button>
+					</div>
+				)}
+			</div>
 
-            <ActionDestinationModal isEdit={isEdit} isOpen={isOpen} onClose={handleClose} refetchItems={refetch} editData={data} />
-            <ConfirmDialog />
-        </div>
-    );
+			<ActionDestinationModal isEdit={isEdit} isOpen={isOpen} onClose={handleClose} refetchItems={refetch} editData={data} />
+			<ConfirmDialog />
+		</div>
+	);
 };
 
 export default Detail;
+
+// invalidateQueries:
+// Đánh dấu query là stale(cũ)
+// Trigger refetch cho TẤT CẢ queries match với key pattern
+// Có thể affect nhiều queries cùng lúc
+// Reset entire cache của query đó
+
+// refetch:
+// Chỉ refetch một specific query instance
+// Không reset cache
+// Chỉ affect một query cụ thể

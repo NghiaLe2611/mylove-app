@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
 	AlertDialog,
 	AlertDialogBody,
@@ -19,18 +19,24 @@ export const useConfirm = ({
 	onConfirm,
 }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
+    const [confirmData, setConfirmData] = useState(null); 
 	const cancelRef = React.useRef();
 
 	const handleConfirm = useCallback(() => {
-		onConfirm();
+        onConfirm(confirmData);
 		onClose();
-	}, []);
+    }, [confirmData, onClose, onConfirm]);
+
+    const handleOpen = useCallback((data) => {
+        setConfirmData(data);
+        onOpen();
+    }, []);
 
 	const ConfirmDialog = useCallback(() => {
 		return (
-			<AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
+			<AlertDialog isOpen={isOpen} isCentered leastDestructiveRef={cancelRef} onClose={onClose}>
 				<AlertDialogOverlay>
-					<AlertDialogContent>
+					<AlertDialogContent className='!max-w-[90vw] md:!max-w-[500px]'>
 						{title && (
 							<AlertDialogHeader fontSize='lg' fontWeight='bold'>
 								{title}
@@ -41,7 +47,7 @@ export const useConfirm = ({
 							<Button ref={cancelRef} onClick={onClose}>
 								{cancelLabel}
 							</Button>
-							<Button colorScheme={colorScheme} onClick={handleConfirm} ml={3}>
+                            <Button colorScheme={colorScheme} onClick={handleConfirm} ml={3}>
 								{confirmLabel}
 							</Button>
 						</AlertDialogFooter>
@@ -51,5 +57,5 @@ export const useConfirm = ({
 		);
 	}, [cancelLabel, colorScheme, confirmLabel, description, handleConfirm, isOpen, onClose, title]);
 
-	return { openDialog: onOpen, closeDialog: onClose, ConfirmDialog };
+    return { openDialog: handleOpen, closeDialog: onClose, ConfirmDialog };
 };

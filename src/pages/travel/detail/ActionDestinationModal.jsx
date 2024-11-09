@@ -103,7 +103,7 @@ const ActionDestinationModal = ({ isOpen, onClose, refetchItems, editData, isEdi
     };
 
     return (
-        <CustomModal title={isEdit ? 'Edit trip' : 'Add new destination'} isOpen={isOpen} onClose={onClose}>
+        <CustomModal title={isEdit ? 'Edit trip' : 'Add new destination'} isOpen={isOpen} onClose={onClose} className='!max-w-[600px]'>
             {isEdit ? (
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className='mb-10'>

@@ -10,18 +10,18 @@ import {
 import { MdClose } from 'react-icons/md';
 
 const CustomModal = (props) => {
-    const { isOpen, onClose, title } = props;
+    const { isOpen, onClose, title, className } = props;
     return (
         <Modal isOpen={isOpen} onClose={onClose} className='items-center' isCentered>
             <ModalOverlay />
-            <ModalContent className={classes.modal}>
+            <ModalContent className={`${classes.modal} ${className}`}>
                 <ModalHeader className={classes.header}>
                     {title ? <h3>{title}</h3> : null}
                     <Button variant='text' className='!p-0' onClick={onClose}>
                         <MdClose className='text-xl' />
                     </Button>
                 </ModalHeader>
-                <ModalBody className='p-4 !pb-10 text-sm'>
+                <ModalBody className='p-4 !pb-8 text-sm'>
                     {props.children}
                 </ModalBody>
                 {/* <ModalFooter>
