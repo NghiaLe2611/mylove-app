@@ -8,12 +8,12 @@
 
 .backBtn {
     @apply absolute top-4 left-4 z-10 cursor-pointer;
-    @apply w-6 h-6 rounded-full flex items-center justify-center bg-background;
+    @apply w-8 h-8 rounded-full flex items-center justify-center bg-background border;
 }
 
 .img {
     @apply relative h-[30vh] w-full rounded-b-lg mb-5;
-    @apply md:max-w-[600px] md:mx-auto;
+    @apply md:mx-auto;
     box-shadow: 1px 4px 6px 0 #8f8f8f;
 
     img {

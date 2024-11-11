@@ -63,7 +63,7 @@ a {
 }
 
 .wrap-content {
-    @apply h-full w-full px-4 md:px-0 py-5 overflow-y-auto;
+    @apply h-full w-full px-4 py-5 overflow-y-auto;
     @apply md:h-auto;
 }
 

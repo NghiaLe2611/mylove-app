@@ -10,7 +10,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
 
-const Photos = ({ name, activeTab, children }) => {
+const Photos = ({ name, activeTab }) => {
 	const queryClient = useQueryClient();
 	const [currentImage, setCurrentImage] = useState(null);
 
@@ -111,8 +111,7 @@ const Photos = ({ name, activeTab, children }) => {
 
 	return (
 		<div>
-			{children}
-
+            
 			{data?.data.length > 0 ? (
 				<MasonryGallery>
 					{data.data.map((item) => (

@@ -13,7 +13,7 @@ const MainLayout = () => {
 			<Header />
 			<Box
 				as='main'
-				className={`${path ? path : 'home'} mx-auto max-w-screen-xl w-full overflow-y-hidden`}
+				className={`${path ? path : 'home'} mx-auto max-w-screen-md xl:max-w-screen-xl w-full overflow-y-hidden`}
 				flex={1}>
 				<FadeIn className='wrap-content'>
 					<Outlet />

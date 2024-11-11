@@ -89,7 +89,7 @@ const Items = ({ data, id, refetch }) => {
 
 	if (data && data.length) {
 		return (
-			<div className='md:grid md:grid-cols-2 gap-4 lg:gap-8 space-y-4 md:space-y-0'>
+            <div className='md:grid md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-8 space-y-4 md:space-y-0'>
 				{data.map((item) => (
 					<div
 						key={item.name}

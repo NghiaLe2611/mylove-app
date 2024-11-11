@@ -49,7 +49,7 @@ const Header = () => {
 	return (
 		<Box as='header' className={`${classes.header} header`}>
 			<BrowserView>
-				<Box as='nav' className='w-full grid grid-cols-[150px_1fr_150px] py-2 items-center mx-auto max-w-screen-xl'>
+                <Box as='nav' className='w-full grid grid-cols-[150px_1fr_150px] py-2 items-center mx-auto max-w-screen-md xl:max-w-screen-xl'>
 					<Box>
 						<Link to='/' className='flex items-center'>
 							<Image src='/images/love-img.png' alt='logo' maxW={`40px`} />

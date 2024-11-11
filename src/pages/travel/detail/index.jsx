@@ -2,20 +2,40 @@ import { deleteTrip, getDetailTrip } from '@/api/travelApi';
 import Loader from '@/components/loader';
 import { useConfirm } from '@/hooks/useConfirm';
 import useCustomToast from '@/hooks/useCustomToast';
-import { Button, createStylesContext, Image, Tab, TabList, TabPanel, TabPanels, Tabs, useDisclosure } from '@chakra-ui/react';
+import {
+	Button,
+	Image,
+	Popover,
+	PopoverArrow,
+	PopoverBody,
+	PopoverCloseButton,
+	PopoverContent,
+	PopoverTrigger,
+	Tab,
+	TabList,
+	TabPanel,
+	TabPanels,
+	Tabs,
+	useDisclosure,
+	VStack,
+} from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import moment from 'moment';
 import { useCallback, useState } from 'react';
+import { FaMapMarkerAlt } from 'react-icons/fa';
 import { IoIosArrowBack } from 'react-icons/io';
-import { MdAdd, MdDelete, MdEdit, MdFileUpload } from 'react-icons/md';
+import { IoEllipsisVerticalSharp, IoFastFood } from 'react-icons/io5';
+import { MdDelete, MdEdit, MdFileUpload } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router-dom';
 import Accomodation from './Accomodation';
 import ActionDestinationModal from './ActionDestinationModal';
-import Foods from './Foods';
-import Items from './Items';
 import classes from './detail.module.scss';
-import Photos from './Photos';
+import Foods from './Foods';
 import ImageUpload from './ImageUpload';
+import Items from './Items';
+import Photos from './Photos';
+import UploadModal from './UploadModal';
+import FoodModal from './FoodModal';
 const style = `<style>.header {display: none;}</style>`;
 
 const tabStyles = {
@@ -29,6 +49,7 @@ const Detail = () => {
 	const [isEdit, setIsEdit] = useState();
 	const [tabIndex, setTabIndex] = useState(0);
 	const [isUpload, setIsUpload] = useState(false);
+	const [isAddFood, setIsAddFood] = useState(false);
 	const { id } = useParams();
 	const queryClient = useQueryClient();
 
@@ -124,30 +145,84 @@ const Detail = () => {
 								<IoIosArrowBack className='text-xl' />
 							</span>
 							<div className={classes.wrapBtn}>
-								<Button className={classes.circleBtn} onClick={onOpen} colorScheme='green' bg='green.500'>
-									<MdAdd />
-								</Button>
-								<Button className={classes.circleBtn} onClick={handleEdit} colorScheme='blue' bg='blue.500'>
+								<Button
+									className={classes.circleBtn}
+									onClick={handleEdit}
+									colorScheme='blue'
+									bg='blue.500'
+									title='Edit trip'>
 									<MdEdit />
 								</Button>
+								<Button
+									className={classes.circleBtn}
+									onClick={onOpen}
+									colorScheme='green'
+									bg='green.500'
+									title='Add destination'>
+									<FaMapMarkerAlt />
+								</Button>
+								<Button
+									className={classes.circleBtn}
+									// isDisabled={tabIndex !== 2}
+									colorScheme='orange'
+									bg='orange.500'
+									onClick={() => setIsAddFood(true)}
+									title='Add food'>
+									<IoFastFood />
+								</Button>
 								{/* <Button className={`${classes.circleBtn} !text-white`} colorScheme='red'>
-									<MdFavoriteBorder />
-								</Button> */}
+                                    <MdFavoriteBorder />
+                                </Button> */}
 								<Button
 									className={`${classes.circleBtn} !text-white`}
-									isDisabled={tabIndex !== 3}
+									// isDisabled={tabIndex !== 3}
 									colorScheme='blue'
 									bg='blue.600'
-									onClick={() => setIsUpload(true)}>
+									onClick={() => setIsUpload(true)}
+									title='Upload photo'>
 									<MdFileUpload />
 								</Button>
 								<Button
 									className={`${classes.circleBtn} !text-white`}
 									bg='red.500'
 									colorScheme='red'
-									onClick={handleDeleteTrip}>
+									onClick={handleDeleteTrip}
+									title='Delete trip'>
 									<MdDelete />
 								</Button>
+
+								{/* <Popover placement='bottom'>
+									<PopoverTrigger>
+										<Button className={classes.circleBtn} colorScheme='yellow'>
+											<IoEllipsisVerticalSharp />
+										</Button>
+									</PopoverTrigger>
+									<PopoverContent className='!max-w-fit'>
+										<PopoverBody>
+											<VStack className='space-y-2'>
+												<Button className={classes.circleBtn} onClick={onOpen} colorScheme='green' bg='green.500'>
+													<FaMapMarkerAlt />
+												</Button>
+												<Button
+													className={classes.circleBtn}
+													// isDisabled={tabIndex !== 2}
+													colorScheme='orange'
+													bg='orange.500'
+													onClick={() => setIsAddFood(true)}>
+													<IoFastFood />
+												</Button>
+												<Button
+													className={`${classes.circleBtn} !text-white`}
+													// isDisabled={tabIndex !== 3}
+													colorScheme='blue'
+													bg='blue.600'
+													onClick={() => setIsUpload(true)}>
+													<MdFileUpload />
+												</Button>
+											</VStack>
+										</PopoverBody>
+									</PopoverContent>
+								</Popover> */}
 							</div>
 							{data.image ? (
 								<Image src={data.image} alt={data.name} className='h-full w-full object-cover' />
@@ -196,30 +271,25 @@ const Detail = () => {
 										<Foods initData={data} />
 									</TabPanel>
 									<TabPanel>
-										<Photos name={data.name} activeTab={tabIndex}>
-											<ImageUpload name={data.name} isUpload={isUpload} closeUpload={() => setIsUpload(false)} />
-										</Photos>
+										<Photos
+											name={data.name}
+											activeTab={tabIndex}
+											isUpload={isUpload}
+											closeUpload={() => setIsUpload(false)}
+										/>
 									</TabPanel>
 								</TabPanels>
 							</Tabs>
 						</div>
 					</>
 				) : (
-					<div className='p-4'>
-						<p className='text-center mb-2'>Trip not found.</p>
-						<Button
-							className='!flex !mx-auto'
-							colorScheme='primary'
-							onClick={() => {
-								navigate('/travel');
-							}}>
-							Back to list
-						</Button>
-					</div>
+			 
 				)}
 			</div>
 
 			<ActionDestinationModal isEdit={isEdit} isOpen={isOpen} onClose={handleClose} refetchItems={refetch} editData={data} />
+			<UploadModal name={data.name} isUpload={isUpload} closeUpload={() => setIsUpload(false)} />
+			<FoodModal initData={data} isAdd={isAddFood} setIsAdd={setIsAddFood} />
 			<ConfirmDialog />
 		</div>
 	);
