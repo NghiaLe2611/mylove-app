@@ -5,7 +5,7 @@ import MasonryGallery from '@/components/masonry';
 import CustomModal from '@/components/modal';
 import { useConfirm } from '@/hooks/useConfirm';
 import useCustomToast from '@/hooks/useCustomToast';
-import { Button, HStack, Skeleton, Stack, useDisclosure } from '@chakra-ui/react';
+import { Button, HStack, useDisclosure } from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
@@ -99,19 +99,8 @@ const Photos = ({ name, activeTab }) => {
 		handleDeleteAll(data?.data);
 	};
 
-	if (isFetching) {
-		return (
-			<Stack>
-				<Skeleton height='150px' />
-				<Skeleton height='150px' />
-				<Skeleton height='150px' />
-			</Stack>
-		);
-	}
-
 	return (
 		<div>
-            
 			{data?.data.length > 0 ? (
 				<MasonryGallery>
 					{data.data.map((item) => (
