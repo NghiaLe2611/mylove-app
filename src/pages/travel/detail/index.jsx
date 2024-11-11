@@ -282,9 +282,7 @@ const Detail = () => {
 							</Tabs>
 						</div>
 					</>
-				) : (
-			 
-				)}
+				) : null}
 			</div>
 
 			<ActionDestinationModal isEdit={isEdit} isOpen={isOpen} onClose={handleClose} refetchItems={refetch} editData={data} />
