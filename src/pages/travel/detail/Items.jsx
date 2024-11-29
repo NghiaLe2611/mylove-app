@@ -178,7 +178,7 @@ const Items = ({ data, id, refetch }) => {
 		);
 	}
 
-	return <p>There is no destination now. Please add one.</p>;
+    return <p className='text-center'>Destination list is now empty.</p>;
 
 	// Show as slide
 	// return data ? (

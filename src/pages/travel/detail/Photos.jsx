@@ -110,7 +110,7 @@ const Photos = ({ name, activeTab }) => {
 					))}
 				</MasonryGallery>
 			) : (
-				<div className='text-center text-lg my-5'>Photos is now empty.</div>
+				<p className='text-center'>Photos is now empty.</p>
 			)}
 
 			<CustomModal title={currentImage} isOpen={isOpen} onClose={handleCloseImage} className='md:!max-w-[600px]'>
