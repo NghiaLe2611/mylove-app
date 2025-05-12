@@ -63,8 +63,8 @@ const AuthPage = () => {
                                 isInvalid={Boolean(errors['email'])}
                                 errorBorderColor='red.500'
                                 {...register('email')}
-                                placeholder='Enter your email'
-                                defaultValue='nghiapro2611@gmail.com'
+                                placeholder='Enter your username/email'
+                                defaultValue=''
                             />
                             <FormError message={errors['email']?.message} />
                         </FormControl>
