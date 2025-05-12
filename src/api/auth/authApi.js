@@ -1,9 +1,9 @@
 import axiosClient from '@/axios/axiosClient';
 
-export const authLogin = (email) => {
+export const authLogin = (data) => {
     return axiosClient.post(
         `${import.meta.env.VITE_API_URL}/api/auth/login`,
-        email,
+        data,
         // {
         //     withCredentials: true,
         // }

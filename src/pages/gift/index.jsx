@@ -170,7 +170,7 @@ const GiftApp = () => {
 					/>
 				) : null}
 			</div>
-			<Modal isOpen={isModalOpen} onClose={closeModal}>
+            <Modal isOpen={isModalOpen} onClose={closeModal} gender={gender}>
 				<Form setFormValue={handleSetFormData} formData={data} />
 			</Modal>
 		</>
